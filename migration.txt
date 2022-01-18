@@ -1,0 +1,11 @@
+
+
+sequelize model:create --name petugas --attributes id_petugas:integer,username:string,password:string,nama_petugas:string,level:enum
+
+sequelize model:create --name siswa --attributes nisn:char,nis:char,nama:string,id_kelas:integer,alamat:text,no_tlp:string
+
+sequelize model:create --name kelas --attributes id_kelas:integer,nama_kelas:string,jurusan:string,angkatan:integer
+
+sequelize model:create --name spp --attributes id_spp:integer,angkatan:integer,tahun:integer,nominal:integer
+
+sequelize model:create --name pembayaran --attributes id_pembayaran:integer,id_petugas:integer,nisn:char,tgl_bayar:date,bulan_spp:integer,tahun_spp:integer

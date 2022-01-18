@@ -7,10 +7,10 @@ const authorize = (req, res, next)=>{
     if(authHeader){
         const token =authHeader.split('.')[1];
 
-        let verifiedPetugas = jwt.verify(token, secret);
+        let verifiedUser = jwt.verify(token, secret);
         
         if(!verifiedUser) return res.status(401).send('Unauthorized request')
-        req.petugas = verifiedPetugas; // id & role
+        req.user = verifiedUser; // id & role
         next();
     }else{
         return res.status(401).json({ message: 'Unauthorized' });

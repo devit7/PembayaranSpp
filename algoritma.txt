@@ -1,0 +1,18 @@
+
+
+management user
+-petugas 
+-siswa
+-spp
+-kelas
+
+pembayaran
+-> id petugas(auto)
+   nisn
+   bulan
+   tahun
+
+history
+-kolom cari status [sudah bayar,belum]
+-table -> 
+	nisn,nama,kelas

@@ -32,7 +32,8 @@ module.exports = (sequelize, DataTypes) => {
     nisn:DataTypes.CHAR,
     tgl_bayar: DataTypes.DATE,
     bulan_spp: DataTypes.INTEGER,
-    tahun_spp: DataTypes.INTEGER
+    tahun_spp: DataTypes.INTEGER,
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'pembayaran',

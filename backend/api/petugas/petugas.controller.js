@@ -2,7 +2,7 @@ const models = require("../../models/index");
 const petugas = models.petugas;
 const md5 = require('md5');
 const jwt = require('jsonwebtoken');
-
+const config = require('../auth/secret.json');
 
 module.exports={
     controllerGetAll:(req,res)=>{
@@ -85,5 +85,28 @@ module.exports={
                 message: error.message
             })
         })
+    },
+    controllerAuth: async (req,res)=>{
+        const data = {
+            username : req.body.username,
+            password : req.body.password,
+            level : req.body.level
+        }
+        let result = await petugas.findOne({where: data})
+        if(result){
+            // generate token
+            let token = jwt.sign({ sub: result.id, level: result.level }, config.secret)
+            res.json({
+                logged: true,
+                data: result,
+                token: token
+            })
+        }else{
+            res.json({
+                logged: false,
+                message: "Username or password is incorrect",
+                data: result
+            })
+        }   
     }
 }
