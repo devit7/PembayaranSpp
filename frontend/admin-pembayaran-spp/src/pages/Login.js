@@ -8,7 +8,7 @@ class Login extends React.Component{
         this.state = {
             username : "",
             password : "",
-            level: "",
+            level : "",   
             message : "",
             logged : true
         }
@@ -20,7 +20,7 @@ class Login extends React.Component{
         let sendData = {
             username: this.state.username,
             password: this.state.password,
-            level:"admin"
+            level: "admin"
         }
         console.log(sendData)
         let url = base_url + "/petugas/auth"
@@ -78,8 +78,9 @@ class Login extends React.Component{
                 
                     <div className="form-floating">
                     <input type="text" className="form-control" id="floatingInput" placeholder="username" value={this.state.username} onChange={ev => this.setState({username: ev.target.value})}/>
-                    <label for="floatingInput">Email address</label>
+                    <label for="floatingInput">Username</label>
                     </div>
+                    <br></br>
                     <div className="form-floating">
                     <input type="password" className="form-control" id="floatingPassword" placeholder="Password" value={this.state.password} onChange={ev => this.setState({password: ev.target.value})} autoComplete="false"/>
                     <label for="floatingPassword">Password</label>

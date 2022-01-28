@@ -1,11 +1,15 @@
 const models = require("../../models/index");
 const petugas = models.petugas;
 const md5 = require('md5');
-const jwt = require('jsonwebtoken');
 const config = require('../auth/secret.json');
 
+
+const auth = require("../auth/authorize");
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = "pembayaranspp";
+
 module.exports={
-    controllerGetAll:(req,res)=>{
+    controllerGetAll: async (req,res)=>{
         petugas.findAll()
         .then(result=>{
             res.json({
@@ -14,7 +18,7 @@ module.exports={
             })
         })
     },
-    controllerGetId:(req,res)=>{
+    controllerGetId: (req,res)=>{
         const param = { id_petugas: req.params.id_petugas}
         petugas.findOne({where:param})
         .then(result => {
@@ -29,7 +33,7 @@ module.exports={
             })
         })
     },
-    controllerAdd:(req,res)=>{
+    controllerAdd: async (req,res)=>{
         const data = {
             username : req.body.username,
             password : req.body.password,
@@ -49,7 +53,7 @@ module.exports={
             })
         })
     },
-    controllerEdit:(req,res)=>{
+    controllerEdit: (req,res)=>{
         const param = { id_petugas: req.body.id_petugas}
         const data = {
             id_petugas: req.body.id_petugas,
@@ -71,8 +75,8 @@ module.exports={
             })
         })
     },
-    controllerDelete: (req,res)=>{
-        const param = { id_petugas: req.body.id_petugas}
+    controllerDelete: async (req,res)=>{
+        const param = { id_petugas: req.params.id_petugas}
         petugas.destroy({where: param})
         .then(result => {
             res.json({
@@ -95,7 +99,7 @@ module.exports={
         let result = await petugas.findOne({where: data})
         if(result){
             // generate token
-            let token = jwt.sign({ sub: result.id, level: result.level }, config.secret)
+            let token = jwt.sign({ sub: result.id_petugas, level: result.level }, config.secret)
             res.json({
                 logged: true,
                 data: result,
