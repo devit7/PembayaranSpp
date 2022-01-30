@@ -18,7 +18,7 @@ module.exports={
             })
         })
     },
-    controllerGetId: (req,res)=>{
+    controllerGetId: async (req,res)=>{
         const param = { id_petugas: req.params.id_petugas}
         petugas.findOne({where:param})
         .then(result => {
@@ -53,7 +53,7 @@ module.exports={
             })
         })
     },
-    controllerEdit: (req,res)=>{
+    controllerEdit: async (req,res)=>{
         const param = { id_petugas: req.body.id_petugas}
         const data = {
             id_petugas: req.body.id_petugas,

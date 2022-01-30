@@ -1,7 +1,7 @@
 import React from "react"
 import Navbar from "../components/Navbar"
 import { base_url } from "../config"
-import $ from "jquery";
+import $, { event } from "jquery";
 import axios from "axios"
 
 
@@ -35,8 +35,9 @@ headerConfig = () => {
     
 }
 
-savePetugas = (ev) => {
-        
+savePetugas = event => {
+    event.preventDefault()
+
     //window.$('#modal_petugas-id').modal("hide");
      $("#modal_petugas").modal("hide")
     const data = {

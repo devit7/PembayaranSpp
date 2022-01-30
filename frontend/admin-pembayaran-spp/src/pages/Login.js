@@ -77,13 +77,15 @@ class Login extends React.Component{
                     <h1 className="h3 mb-3 fw-normal">Admin sign in</h1>
                 
                     <div className="form-floating">
-                    <input type="text" className="form-control" id="floatingInput" placeholder="username" value={this.state.username} onChange={ev => this.setState({username: ev.target.value})}/>
                     <label for="floatingInput">Username</label>
+                    <input type="text" className="form-control" id="floatingInput" placeholder="username" value={this.state.username} onChange={ev => this.setState({username: ev.target.value})}/>
+                    
                     </div>
-                    <br></br>
+                    
                     <div className="form-floating">
-                    <input type="password" className="form-control" id="floatingPassword" placeholder="Password" value={this.state.password} onChange={ev => this.setState({password: ev.target.value})} autoComplete="false"/>
                     <label for="floatingPassword">Password</label>
+                    <input type="password" className="form-control" id="floatingPassword" placeholder="Password" value={this.state.password} onChange={ev => this.setState({password: ev.target.value})} autoComplete="false"/>
+                    
                     </div>
                     <div className="checkbox mb-3">
                     <label>
