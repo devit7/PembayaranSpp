@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 
 module.exports={
-    controllerGetAll:(req,res)=>{
+    controllerGetAll:async(req,res)=>{
         kelas.findAll()
         .then(result=>{
             res.json({
@@ -14,7 +14,7 @@ module.exports={
             })
         })
     },
-    controllerGetId:(req,res)=>{
+    controllerGetId:async(req,res)=>{
         const param = { id_kelas: req.params.id_kelas}
         kelas.findOne({where:param})
         .then(result => {
@@ -29,7 +29,7 @@ module.exports={
             })
         })
     },
-    controllerAdd:(req,res)=>{
+    controllerAdd:async(req,res)=>{
         const data = {
             nama_kelas : req.body.nama_kelas,
             jurusan : req.body.jurusan,
@@ -48,7 +48,7 @@ module.exports={
             })
         })
     },
-    controllerEdit:(req,res)=>{
+    controllerEdit:async(req,res)=>{
         const param = { id_kelas: req.body.id_kelas}
         const data = {
             id_kelas: req.body.id_kelas,
@@ -69,7 +69,7 @@ module.exports={
             })
         })
     },
-    controllerDelete: (req,res)=>{
+    controllerDelete: async (req,res)=>{
         const param = { id_kelas: req.body.id_kelas}
         kelas.destroy({where: param})
         .then(result => {

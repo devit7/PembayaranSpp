@@ -79,9 +79,8 @@ class Login extends React.Component{
                     <div className="form-floating">
                     <label for="floatingInput">Username</label>
                     <input type="text" className="form-control" id="floatingInput" placeholder="username" value={this.state.username} onChange={ev => this.setState({username: ev.target.value})}/>
-                    
                     </div>
-                    
+                    <br/>
                     <div className="form-floating">
                     <label for="floatingPassword">Password</label>
                     <input type="password" className="form-control" id="floatingPassword" placeholder="Password" value={this.state.password} onChange={ev => this.setState({password: ev.target.value})} autoComplete="false"/>

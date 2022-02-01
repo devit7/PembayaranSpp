@@ -1,9 +1,11 @@
 import React from "react"
 import Navbar from "../components/Navbar"
 import { base_url } from "../config"
-import $, { event } from "jquery";
 import axios from "axios"
-
+import Modal from "react-modal"
+import ModalHeader from 'react-bootstrap/ModalHeader'
+import CloseButton from 'react-bootstrap/CloseButton'
+Modal.setAppElement('#root');
 
 class Petugas extends React.Component{
 constructor(){
@@ -16,8 +18,11 @@ constructor(){
         username:"",
         password:"",
         nama_petugas:"",
-        level:""
+        level:"",
+        tampilkan:false
     }
+    this.handelClose=this.handelClose.bind(this)
+
     if(localStorage.getItem("token")){
         this.state.token = localStorage.getItem("token")
     }else{
@@ -35,11 +40,15 @@ headerConfig = () => {
     
 }
 
+handelClose(){
+    this.setState({tampilkan:false})
+}
+
 savePetugas = event => {
     event.preventDefault()
 
     //window.$('#modal_petugas-id').modal("hide");
-     $("#modal_petugas").modal("hide")
+    this.setState({tampilkan:false});
     const data = {
         id_petugas: this.state.id_petugas,
         username: this.state.username,
@@ -71,7 +80,7 @@ savePetugas = event => {
     //add
     Add = () => {
         //$('#modal_petugas-id').modal("show");
-        $("#modal_petugas").modal("show")
+        this.setState({tampilkan:true});
         this.setState({
             action: "insert",
             id_petugas: 0,
@@ -85,7 +94,7 @@ savePetugas = event => {
     
     //edit
     Edit = selectionItem => {
-        $("#modal_petugas").modal("show")
+        this.setState({tampilkan:true});
         this.setState({
             action: "update",
             id_petugas: selectionItem.id_petugas,
@@ -129,9 +138,7 @@ savePetugas = event => {
                 this.getPetugas()
             })
             .catch(error => console.log(error))
-            console.log(this.state.token);
-            console.log(this.headerConfig())
-            console.log(this.id_petugas)
+            this.getPetugas()
         }
     }
 
@@ -145,11 +152,16 @@ savePetugas = event => {
                 <Navbar />
                 <div className="container">
                     <h3 className="text-bold text-info mt-2">Petugas List</h3>
+                    <button className="btn btn-success" onClick={() => this.Add()}>
+                        Tambah Petugas
+                    </button>
+                    <br></br>
+                    <br></br>
                     <table className="table table-bordered">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name Petugas</th>
+                                <th>Nama Petugas</th>
                                 <th>Username</th>
                                 <th>Option</th>
                             </tr>
@@ -175,50 +187,70 @@ savePetugas = event => {
                             ))}
                         </tbody>
                     </table>
-                    <button className="btn btn-success" onClick={() => this.Add()}>
-                        Tambah Petugas
-                    </button>
+                   
 
                     {/** modal petugas */}
                     <div className="modal fade" id="modal_petugas">
-                        <div className="modal-dialog">
-                            <div className="modal-content">
-                                <div className="modal-header bg-info text-white">
-                                    <h4>Form Petugas</h4>
-                                </div>
-                                <div className="modal-body">
-                                    <form onSubmit={ev => this.savePetugas(ev)}>
-                                        USERNAME
-                                        <input type="text" className="form-control mb-1"
-                                        value={this.state.username}
-                                        onChange={ev => this.setState({username: ev.target.value})}
-                                        required
-                                        />
-                                        PASSWORD
-                                        <input type="text" className="form-control mb-1"
-                                        value={this.state.password}
-                                        onChange={ev => this.setState({password: ev.target.value})}
-                                        required
-                                        />
-                                        NAMA PETUGAS
-                                        <input type="text" className="form-control mb-1"
-                                        value={this.state.nama_petugas}
-                                        onChange={ev => this.setState({nama_petugas: ev.target.value})}
-                                        required
-                                        />
-                                        LEVEL
-                                        <input type="text" className="form-control mb-1"
-                                        value={this.state.level}
-                                        onChange={ev => this.setState({level: ev.target.value})}
-                                        required
-                                        />
-                                        <button type="submit" className="btn btn-block btn-success">
-                                            Simpan
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        <Modal 
+                        isOpen={this.state.tampilkan}
+                        contentLabel="Minimal Modal Example"
+                        style={{
+                            content: {
+                                border: '0',
+                                borderRadius: '4px',
+                                bottom: 'auto',
+                                minHeight: '10rem',
+                                left: '50%',
+                                padding: '2rem',
+                                position: 'fixed',
+                                right: 'auto',
+                                top: '50%',
+                                transform: 'translate(-50%,-50%)',
+                                minWidth: '20rem',
+                                width: '30%',
+                                maxWidth: '60rem'
+                            }
+                            }
+                        }
+                    >
+                        <ModalHeader>
+                        <h4>Form Petugas</h4>
+                        <CloseButton onClick={this.handelClose}/>
+                        </ModalHeader>             
+                            
+                        <div className="modal-body card-body ">
+                                            <form onSubmit={ev => this.savePetugas(ev)}>
+                                                USERNAME
+                                                <input type="text" className="form-control mb-1"
+                                                value={this.state.username}
+                                                onChange={ev => this.setState({username: ev.target.value})}
+                                                required
+                                                />
+                                                PASSWORD
+                                                <input type="text" className="form-control mb-1"
+                                                value={this.state.password}
+                                                onChange={ev => this.setState({password: ev.target.value})}
+                                                required
+                                                />
+                                                NAMA PETUGAS
+                                                <input type="text" className="form-control mb-1"
+                                                value={this.state.nama_petugas}
+                                                onChange={ev => this.setState({nama_petugas: ev.target.value})}
+                                                required
+                                                />
+                                                <label for="exampleInputPassword1" className="form-label">LEVEL</label>
+                                                <select className="form-select" aria-label="Default select example" value={this.state.level} onChange={ev => this.setState({level: ev.target.value})}required>
+                                                    <option value="1">admin</option>
+                                                    <option value="2">petugas</option>
+                                                </select>
+                                                <br/>
+                                                <button type="submit" className="btn btn-block btn-success">
+                                                    Simpan
+                                                </button>
+                                            </form>
+                                        </div>
+                                        
+                        </Modal>
                     </div>
                 </div>
             </div>

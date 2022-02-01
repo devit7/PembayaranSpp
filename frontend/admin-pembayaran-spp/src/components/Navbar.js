@@ -13,14 +13,11 @@ class Navbar extends React.Component{
                 <a className="navbar-brand">
                     Pembayaran Spp
                 </a>
-
-                
                 <button className="navbar-toggler" data-toggle="collapse"
                 data-target="#menu">
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                
                 <div id="menu" className="navbar-collapse collpase">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
@@ -31,6 +28,26 @@ class Navbar extends React.Component{
                         <li className="nav-item">
                             <Link to="/petugas" className="nav-link">
                                 Petugas
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/kelas" className="nav-link">
+                                Kelas
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/spp" className="nav-link">
+                                Spp
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/siswa" className="nav-link">
+                                Siswa
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/pembayaran" className="nav-link">
+                                Pembayaran
                             </Link>
                         </li>
                         <li className="nav-item">

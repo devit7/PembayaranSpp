@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
 
 
 module.exports={
-    controllerGetAll:(req,res)=>{
-        kelas.findAll()
+    controllerGetAll:async (req,res)=>{
+        spp.findAll()
         .then(result=>{
             res.json({
                 sucess:1,
@@ -14,7 +14,7 @@ module.exports={
             })
         })
     },
-    controllerGetId:(req,res)=>{
+    controllerGetId:async (req,res)=>{
         const param = { id_spp: req.params.id_spp}
         spp.findOne({where:param})
         .then(result => {
@@ -29,7 +29,7 @@ module.exports={
             })
         })
     },
-    controllerAdd:(req,res)=>{
+    controllerAdd:async (req,res)=>{
         const data = {
             angkatan : req.body.angkatan,
             tahun : req.body.tahun,
@@ -48,7 +48,7 @@ module.exports={
             })
         })
     },
-    controllerEdit:(req,res)=>{
+    controllerEdit:async (req,res)=>{
         const param = { id_spp: req.body.id_spp}
         const data = {
             id_spp: req.body.id_spp,
@@ -69,7 +69,7 @@ module.exports={
             })
         })
     },
-    controllerDelete: (req,res)=>{
+    controllerDelete:async (req,res)=>{
         const param = { id_spp: req.body.id_spp}
         spp.destroy({where: param})
         .then(result => {
