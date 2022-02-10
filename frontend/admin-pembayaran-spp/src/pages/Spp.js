@@ -60,7 +60,7 @@ saveSpp = event => {
     if (this.state.action === "insert") {
         axios.post(url, data, this.headerConfig())
         .then(response => {
-            window.alert(response.data.message)
+            console.log(response.data.message)
             this.getSpp()
         })
         .catch(error => console.log(error))
@@ -68,7 +68,7 @@ saveSpp = event => {
     } else if(this.state.action === "update"){
         axios.put(url, data, this.headerConfig())
         .then(response => {
-            window.alert(response.data.message)
+            console.log(response.data.message)
             this.getSpp()
         })
         .catch(error => console.log(error))
@@ -128,7 +128,7 @@ saveSpp = event => {
             let url = base_url + "/spp/" + selectionItem.id_spp
             axios.delete(url, this.headerConfig())
             .then(response => {
-                window.alert(response.data.message)
+                console.log(response.data.message)
                 this.getSpp()
             })
             .catch(error => console.log(error))
@@ -143,7 +143,7 @@ saveSpp = event => {
     render(){
         return(
             <div>
-                <Navbar />
+                
                 <div className="container">
                     <h3 className="text-bold text-info mt-2">Spp List</h3>
                     <button className="btn btn-success" onClick={() => this.Add()}>

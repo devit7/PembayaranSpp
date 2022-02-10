@@ -49,29 +49,26 @@ savePetugas = event => {
 
     //window.$('#modal_petugas-id').modal("hide");
     this.setState({tampilkan:false});
-    const data = {
+    let data = {
         id_petugas: this.state.id_petugas,
         username: this.state.username,
         password: this.state.password,
         nama_petugas: this.state.nama_petugas,
         level: this.state.level
     }
-    if (this.state.password) {
-        data.password = this.state.password
-    }
     let url = base_url + "/petugas"
     if (this.state.action === "insert") {
         axios.post(url, data, this.headerConfig())
         .then(response => {
-            window.alert(response.data.message)
+            console.log(response.data.message)
             this.getPetugas()
         })
         .catch(error => console.log(error))
-        console.log(this.data)
+        this.getPetugas()
     } else if(this.state.action === "update"){
         axios.put(url, data, this.headerConfig())
         .then(response => {
-            window.alert(response.data.message)
+            console.log(response.data.message)
             this.getPetugas()
         })
         .catch(error => console.log(error))
@@ -101,8 +98,7 @@ savePetugas = event => {
             username: selectionItem.username,
             password: selectionItem.password,
             nama_petugas: selectionItem.nama_petugas,
-            level: selectionItem.level,
-            fillPassword: false
+            level: selectionItem.level
         })
     }
 
@@ -134,7 +130,7 @@ savePetugas = event => {
             let url = base_url + "/petugas/" + selectionItem.id_petugas
             axios.delete(url, this.headerConfig())
             .then(response => {
-                window.alert(response.data.message)
+                console.log(response.data.message)
                 this.getPetugas()
             })
             .catch(error => console.log(error))
@@ -149,7 +145,7 @@ savePetugas = event => {
     render(){
         return(
             <div>
-                <Navbar />
+                
                 <div className="container">
                     <h3 className="text-bold text-info mt-2">Petugas List</h3>
                     <button className="btn btn-success" onClick={() => this.Add()}>
@@ -240,8 +236,9 @@ savePetugas = event => {
                                                 />
                                                 <label for="exampleInputPassword1" className="form-label">LEVEL</label>
                                                 <select className="form-select" aria-label="Default select example" value={this.state.level} onChange={ev => this.setState({level: ev.target.value})}required>
-                                                    <option value="1">admin</option>
-                                                    <option value="2">petugas</option>
+                                                    <option selected>Open this select menu</option>
+                                                    <option value="1">petugas</option>
+                                                    <option value="2">admin</option>
                                                 </select>
                                                 <br/>
                                                 <button type="submit" className="btn btn-block btn-success">

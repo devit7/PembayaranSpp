@@ -34,7 +34,7 @@ module.exports={
         })
     },
     controllerAdd: async (req,res)=>{
-        const data = {
+        let data = {
             username : req.body.username,
             password : req.body.password,
             nama_petugas : req.body.nama_petugas,
@@ -43,6 +43,7 @@ module.exports={
         petugas.create(data)
         .then(result => {
             res.json({
+                message: "data has been inserted",
                 success : 1,
                 data : result,data
             })
@@ -65,6 +66,7 @@ module.exports={
         petugas.update(data , {where: param})
         .then(result => {
             res.json({
+                message: "data has been update",
                 success : 1,
                 data : result,data
             })
@@ -80,7 +82,7 @@ module.exports={
         petugas.destroy({where: param})
         .then(result => {
             res.json({
-                success : 1,
+                message : "data has been destroyed",
                 data : result
             })
         })

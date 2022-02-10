@@ -35,10 +35,10 @@ export default class Home extends React.Component{
     render(){
         return(
             <div>
-                <Navbar/>
+                
                 <div className="container mt-2">
-                    <h3 className="my-2">
-                        <strong>Welcome back, {this.state.adminName}</strong>
+                    <h3 className="my-2 ">
+                        <strong className="light">{this.state.adminName}</strong>
                     </h3>
                    
                 </div>

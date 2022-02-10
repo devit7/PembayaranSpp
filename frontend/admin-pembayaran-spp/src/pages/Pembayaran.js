@@ -56,7 +56,7 @@ savePembayaran = event => {
     if (this.state.action === "insert") {
         axios.post(url, data, this.headerConfig())
         .then(response => {
-            window.alert(response.data.message)
+            console.log(response.data.message)
             this.getPembayaran()
         })
         .catch(error => console.log(error))
@@ -64,7 +64,7 @@ savePembayaran = event => {
     } else if(this.state.action === "update"){
         axios.put(url, data, this.headerConfig())
         .then(response => {
-            window.alert(response.data.message)
+            console.log(response.data.message)
             this.getPembayaran()
         })
         .catch(error => console.log(error))
@@ -130,7 +130,7 @@ savePembayaran = event => {
             let url = base_url + "/pembayaran/" + selectionItem.id_pembayaran
             axios.delete(url, this.headerConfig())
             .then(response => {
-                window.alert(response.data.message)
+                console.log(response.data.message)
                 this.getPetugas()
             })
             .catch(error => console.log(error))
@@ -144,7 +144,6 @@ savePembayaran = event => {
     render(){
         return(
             <div>
-                <Navbar />
                 <div className="container">
                     <h3 className="text-bold text-info mt-2">Pembayaran List</h3>
                     <button className="btn btn-success" onClick={() => this.Add()}>
@@ -202,29 +201,40 @@ savePembayaran = event => {
                                 <div className="modal-body">
                                     <form onSubmit={ev => this.savePembayaran(ev)}>
                                         Id Petugas
-                                        <input type="text" className="form-control mb-1"
+                                        <input type="number" className="form-control mb-1"
                                         value={this.state.id_petugas}
                                         onChange={ev => this.setState({id_petugas: ev.target.value})}
                                         required
                                         />
                                         Nisn
-                                        <input type="text" className="form-control mb-1"
+                                        <input type="number" className="form-control mb-1"
                                         value={this.state.nisn}
                                         onChange={ev => this.setState({nisn: ev.target.value})}
                                         required
                                         />
-                                        NAMA PETUGAS
+                                        Tanggal Bayar
                                         <input type="text" className="form-control mb-1"
-                                        value={this.state.nama_petugas}
-                                        onChange={ev => this.setState({nama_petugas: ev.target.value})}
+                                        value={this.state.tgl_bayar}
+                                        onChange={ev => this.setState({tgl_bayar: ev.target.value})}
                                         required
                                         />
-                                        LEVEL
+                                        Bulan Bayar
                                         <input type="text" className="form-control mb-1"
-                                        value={this.state.level}
-                                        onChange={ev => this.setState({level: ev.target.value})}
+                                        value={this.state.bulan_spp}
+                                        onChange={ev => this.setState({bulan_spp: ev.target.value})}
                                         required
                                         />
+                                        tahun Bayar
+                                        <input type="text" className="form-control mb-1"
+                                        value={this.state.tahun_spp}
+                                        onChange={ev => this.setState({tahun_spp: ev.target.value})}
+                                        required
+                                        />
+                                        <label for="exampleInputPassword1" className="form-label">Status</label>
+                                                <select className="form-select" aria-label="Default select example" value={this.state.status} onChange={ev => this.setState({status: ev.target.value})}required>
+                                                    <option value="1">sudah bayar</option>
+                                                    <option value="2">belum bayar</option>
+                                                </select>
                                         <button type="submit" className="btn btn-block btn-success">
                                             Simpan
                                         </button>

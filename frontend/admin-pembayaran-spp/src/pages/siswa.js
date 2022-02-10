@@ -63,7 +63,7 @@ saveSiswa = event => {
     if (this.state.action === "insert") {
         axios.post(url, data, this.headerConfig())
         .then(response => {
-            window.alert(response.data.message)
+            console.log(response.data.message)
             this.getSiswa()
         })
         .catch(error => console.log(error))
@@ -71,7 +71,7 @@ saveSiswa = event => {
     } else if(this.state.action === "update"){
         axios.put(url, data, this.headerConfig())
         .then(response => {
-            window.alert(response.data.message)
+            console.log(response.data.message)
             this.getSiswa()
         })
         .catch(error => console.log(error))
@@ -137,7 +137,7 @@ saveSiswa = event => {
             let url = base_url + "/siswa/" + selectionItem.nisn
             axios.delete(url, this.headerConfig())
             .then(response => {
-                window.alert(response.data.message)
+                console.log(response.data.message)
                 this.getSiswa()
             })
             .catch(error => console.log(error))
@@ -151,7 +151,7 @@ saveSiswa = event => {
     render(){
         return(
             <div>
-                <Navbar />
+                
                 <div className="container">
                     <h3 className="text-bold text-info mt-2">Petugas List</h3>
                     <button className="btn btn-success" onClick={() => this.Add()}>
@@ -233,13 +233,13 @@ saveSiswa = event => {
                                 <div className="modal-body">
                                     <form onSubmit={ev => this.savePetugas(ev)}>
                                         Nisn
-                                        <input type="text" className="form-control mb-1"
+                                        <input type="number" className="form-control mb-1"
                                         value={this.state.nisn}
                                         onChange={ev => this.setState({nisn: ev.target.value})}
                                         required
                                         />
                                         Nis
-                                        <input type="text" className="form-control mb-1"
+                                        <input type="number" className="form-control mb-1"
                                         value={this.state.nis}
                                         onChange={ev => this.setState({nis: ev.target.value})}
                                         required

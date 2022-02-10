@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 
 module.exports={
-    controllerGetAll:(req,res)=>{
+    controllerGetAll:async(req,res)=>{
         siswa.findAll()
         .then(result=>{
             res.json({
@@ -14,7 +14,7 @@ module.exports={
             })
         })
     },
-    controllerGetId:(req,res)=>{
+    controllerGetId:async(req,res)=>{
         const param = { nisn: req.params.nisn}
         siswa.findOne({where:param})
         .then(result => {
@@ -29,7 +29,7 @@ module.exports={
             })
         })
     },
-    controllerAdd:(req,res)=>{
+    controllerAdd:async(req,res)=>{
         const data = {
             nisn : req.body.nisn,
             nis : req.body.nis,
@@ -51,7 +51,7 @@ module.exports={
             })
         })
     },
-    controllerEdit:(req,res)=>{
+    controllerEdit:async(req,res)=>{
         const param = { nisn: req.body.nisn}
         const data = {
             nisn : req.body.nisn,
@@ -74,7 +74,7 @@ module.exports={
             })
         })
     },
-    controllerDelete: (req,res)=>{
+    controllerDelete:async (req,res)=>{
         const param = { nisn: req.body.nisn}
         siswa.destroy({where: param})
         .then(result => {

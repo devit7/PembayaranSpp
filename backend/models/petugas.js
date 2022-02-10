@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
   petugas.init({
     id_petugas: {
       type:DataTypes.INTEGER,
-      allowNull:false,
       autoIncrement:true,
       primaryKey:true
     },
