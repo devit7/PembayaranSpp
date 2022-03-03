@@ -6,6 +6,7 @@ import axios from "axios"
 import Modal from "react-modal"
 import ModalHeader from 'react-bootstrap/ModalHeader'
 import CloseButton from 'react-bootstrap/CloseButton'
+import Sidebar from "../components/Sidebar"
 Modal.setAppElement('#root');
 
 class Kelas extends React.Component{
@@ -143,7 +144,7 @@ saveKelas = event => {
     render(){
         return(
             <div>
-                
+                <Sidebar/>
                 <div className="container">
                     <h3 className="text-bold text-info mt-2">Kelas List</h3>
                     <button className="btn btn-success" onClick={() => this.Add()}>

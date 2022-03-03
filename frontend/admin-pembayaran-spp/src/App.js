@@ -7,14 +7,13 @@ import Kelas from "./pages/Kelas";
 import Spp from "./pages/Spp";
 import Siswa from "./pages/Siswa";
 import Pembayaran from "./pages/Pembayaran";
-import Sidebar from './components/Sidebar';
-
+import Logout from "./components/Logout";
 
 export default class App extends React.Component{
   render(){
     return (
       <Router>
-        <Sidebar/>
+        
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
@@ -23,6 +22,7 @@ export default class App extends React.Component{
             <Route path="/spp" component={Spp} />
             <Route path="/siswa" component={Siswa}/>
             <Route path="/pembayaran" component={Pembayaran}/>
+            <Route path="/logout" component={Logout}/>
           </Switch>
       </Router>
     )

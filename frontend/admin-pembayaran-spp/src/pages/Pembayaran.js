@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar"
 import { base_url } from "../config"
 import $, { event } from "jquery";
 import axios from "axios"
+import Sidebar from "../components/Sidebar"
 
 
 class Pembayaran extends React.Component{
@@ -144,6 +145,7 @@ savePembayaran = event => {
     render(){
         return(
             <div>
+                <Sidebar/>
                 <div className="container">
                     <h3 className="text-bold text-info mt-2">Pembayaran List</h3>
                     <button className="btn btn-success" onClick={() => this.Add()}>

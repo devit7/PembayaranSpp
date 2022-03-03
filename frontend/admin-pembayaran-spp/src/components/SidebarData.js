@@ -3,8 +3,10 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 import * as RiIcons from 'react-icons/ri';
-
-
+import * as BsIcons from 'react-icons/bs';
+import * as MdIcons from 'react-icons/md';
+import * as FcIcons from 'react-icons/fc';
+import Logout from './Logout';
 
 export const SidebarData = [
   {
@@ -24,36 +26,36 @@ export const SidebarData = [
       {
         title: 'Petugas',
         path: '/petugas',
-        icon: <IoIcons.IoIosPaper />,
+        icon: <BsIcons.BsFillPersonLinesFill/>,
         cName: 'sub-nav'
       },
       {
         title: 'Kelas',
         path: '/kelas',
-        icon: <IoIcons.IoIosPaper />,
+        icon: <MdIcons.MdClass />,
         cName: 'sub-nav'
       },
       {
         title: 'Spp',
         path: '/spp',
-        icon: <IoIcons.IoIosPaper />
+        icon: <FaIcons.FaMoneyCheck />
       },
       {
         title: 'Siswa',
         path: '/siswa',
-        icon: <IoIcons.IoIosPaper />
+        icon: <BsIcons.BsFillFileEarmarkPersonFill />
       },
       {
         title: 'Pembayaran',
         path: '/pembayaran',
-        icon: <IoIcons.IoIosPaper />
+        icon: <FcIcons.FcMoneyTransfer/>
       }
     ]
   },
   {
-    title: 'Messages',
-    path:"/",
-    icon: <FaIcons.FaEnvelopeOpenText />,
+    title: <Logout/>,
+    path: '',
+    icon: <AiIcons.AiOutlineLogout/>,
   }
 
 ];

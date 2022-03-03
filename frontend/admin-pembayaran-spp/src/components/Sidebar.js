@@ -7,11 +7,12 @@ import {BiUserCircle} from 'react-icons/bi';
 import { SidebarData } from './SidebarData';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
-import Home from '../pages/Home';
-
+import {RiAdminFill} from 'react-icons/ri';
+import Admin from '../pages/Admin';
+import Logout from './Logout';
 const Nav = styled.div`
   background: #15171c;
-  height: 60px;
+  height: 50px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -22,7 +23,7 @@ color: #e1e9fc;
 const NavIcon = styled(Link)`
   margin-left: 2rem;
   font-size: 2rem;
-  height: 60px;
+  height: 50px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -30,7 +31,7 @@ const NavIcon = styled(Link)`
 const UserIcon = styled(Link)`
   margin-left: 80rem;
   font-size: 2rem;
-  height: 60px;
+  height: 50px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -66,11 +67,12 @@ const Sidebar = () => {
             
           </NavIcon>
           <UserIcon>
-          <BiUserCircle/>
-          </UserIcon>
+            <RiAdminFill/>
+          </UserIcon >
           <Putih>
-            <Home/>
+            <Admin/>
           </Putih>
+          
         </Nav>
         <SidebarNav sidebar={sidebar}>
           <SidebarWrap>

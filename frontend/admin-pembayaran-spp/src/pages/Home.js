@@ -2,13 +2,12 @@ import React from "react"
 import Navbar from "../components/Navbar"
 import axios from "axios"
 import { base_url } from "../config.js"
+import Sidebar from '../components/Sidebar';
 export default class Home extends React.Component{
     constructor(){
         super()
         this.state = {
             token: "",
-            adminName: null,
-            adminsCount: 0
         }
         if (localStorage.getItem("token")) {
             this.state.token = localStorage.getItem("token")
@@ -22,23 +21,14 @@ export default class Home extends React.Component{
         }
         return header
     }
-    getAdmin = () => {
-        let admin = JSON.parse(localStorage.getItem('admin'))
-        this.setState({adminName: admin.nama_petugas})
-    }
 
-    componentDidMount(){
-
-        this.getAdmin()
-
-    }
     render(){
         return(
             <div>
-                
+                <Sidebar/>
                 <div className="container mt-2">
                     <h3 className="my-2 ">
-                        <strong className="light">{this.state.adminName}</strong>
+                        <h4 className="light">home page</h4>
                     </h3>
                    
                 </div>

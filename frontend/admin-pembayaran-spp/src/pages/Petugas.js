@@ -1,11 +1,18 @@
-import React from "react"
+import React, { useState } from "react"
 import Navbar from "../components/Navbar"
+import { useTable, useGlobalFilter, useAsyncDebounce } from 'react-table'
 import { base_url } from "../config"
 import axios from "axios"
 import Modal from "react-modal"
 import ModalHeader from 'react-bootstrap/ModalHeader'
 import CloseButton from 'react-bootstrap/CloseButton'
+import GlobalFilter from '../table/petugas.table'
+import { PersonPlusFill,TrashFill,PencilFill } from 'react-bootstrap-icons';
+import Sidebar from "../components/Sidebar"
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 Modal.setAppElement('#root');
+
 
 class Petugas extends React.Component{
 constructor(){
@@ -18,9 +25,11 @@ constructor(){
         username:"",
         password:"",
         nama_petugas:"",
-        level:"",
+        level:"ASC",
+        order:"",
         tampilkan:false
     }
+
     this.handelClose=this.handelClose.bind(this)
 
     if(localStorage.getItem("token")){
@@ -61,6 +70,11 @@ savePetugas = event => {
         axios.post(url, data, this.headerConfig())
         .then(response => {
             console.log(response.data.message)
+            if(response.data.message === "data has been inserted"){
+                this.setState(this.createNotification('success'))
+            }else{
+                this.setState(this.createNotification('error'))
+            }
             this.getPetugas()
         })
         .catch(error => console.log(error))
@@ -69,6 +83,11 @@ savePetugas = event => {
         axios.put(url, data, this.headerConfig())
         .then(response => {
             console.log(response.data.message)
+            if(response.data.message === "data has been update"){
+                this.setState(this.createNotification('info'))
+            }else{
+                this.setState(this.createNotification('error'))
+            }
             this.getPetugas()
         })
         .catch(error => console.log(error))
@@ -131,10 +150,58 @@ savePetugas = event => {
             axios.delete(url, this.headerConfig())
             .then(response => {
                 console.log(response.data.message)
+                if(response.data.message === "data has been destroyed"){
+                    this.setState(this.createNotification('warning'))
+                }else{
+                    this.setState(this.createNotification('error'))
+                }
                 this.getPetugas()
             })
             .catch(error => console.log(error))
             this.getPetugas()
+        }
+    }
+    createNotification = (type) => {
+        return () => {
+          switch (type) {
+            case 'info':
+              NotificationManager.info('data has been update','Successfully Update');
+              break;
+            case 'success':
+              NotificationManager.success('data has been inserted', 'Successfully Add');
+              break;
+            case 'warning':
+              NotificationManager.warning('data has been destroyed', 'Successfully Delete', 3000);
+              break;
+            case 'error':
+              NotificationManager.error('Error message', 'Click me!', 5000, () => {
+                alert('callback');
+              });
+              break;
+          }
+    }
+}
+    sorting=(col)=>{
+        let data = {
+            id_petugas: this.state.id_petugas,
+            username: this.state.username,
+            password: this.state.password,
+            nama_petugas: this.state.nama_petugas,
+            level: this.state.level
+        }
+        if(this.state.order === "ASC"){
+            const sorted =[...data].sort((a,b)=>
+            a[col].toLowerCase()>b[col].toLowerCase()?1:-1
+            );
+            this.setState({data:sorted})
+            this.setState({order:"DSC"})
+        }
+        if(this.state.order === "DSC"){
+            const sorted =[...data].sort((a,b)=>
+            a[col].toLowerCase()<b[col].toLowerCase()?1:-1
+            );
+            this.setState({data:sorted})
+            this.setState({order:"ASC"})
         }
     }
 
@@ -142,23 +209,31 @@ savePetugas = event => {
         this.getPetugas()
     }
 
+
     render(){
         return(
             <div>
-                
+                <Sidebar/>
+
                 <div className="container">
-                    <h3 className="text-bold text-info mt-2">Petugas List</h3>
+                    <br/>
                     <button className="btn btn-success" onClick={() => this.Add()}>
-                        Tambah Petugas
+                    <PersonPlusFill/>
                     </button>
+                    <NotificationContainer/>
                     <br></br>
                     <br></br>
-                    <table className="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nama Petugas</th>
-                                <th>Username</th>
+                    <h3>
+        </h3>
+                    <table className="table">
+                        <thead className="thead-dark">
+                            <tr class="filters">
+                                <th>No</th>
+                                <th scope="col" onClick={()=>this.sorting(this.id_petugas)} >Id</th>
+                                <th scope="col">Nama Petugas</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">Level</th>
                                 <th>Option</th>
                             </tr>
                         </thead>
@@ -166,17 +241,20 @@ savePetugas = event => {
                             {this.state.petugas.map((item, index) => (
                                 <tr key={index}>
                                     <td>{index+1}</td>
+                                    <td>{item.id_petugas}</td>
                                     <td>{item.nama_petugas}</td>
                                     <td>{item.username}</td>
+                                    <td>{item.password}</td>
+                                    <td>{item.level}</td>
                                     <td>
                                         <button className="btn btn-sm btn-info m-1"
                                         onClick={() => this.Edit(item)}>
-                                            Edit
+                                            <PencilFill/> Edit
                                         </button>
 
                                         <button className="btn btn-sm btn-danger m-1"
                                         onClick={() => this.dropPetugas(item)}>
-                                            Hapus
+                                            <TrashFill/> Hapus
                                         </button>
                                     </td>
                                 </tr>
