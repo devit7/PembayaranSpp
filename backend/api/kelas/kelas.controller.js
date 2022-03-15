@@ -38,6 +38,7 @@ module.exports={
         kelas.create(data)
         .then(result => {
             res.json({
+                message: "data has been inserted",
                 success : 1,
                 data : result,data
             })
@@ -59,6 +60,7 @@ module.exports={
         kelas.update(data , {where: param})
         .then(result => {
             res.json({
+                message: "data has been update",
                 success : 1,
                 data : result,data
             })
@@ -70,10 +72,11 @@ module.exports={
         })
     },
     controllerDelete: async (req,res)=>{
-        const param = { id_kelas: req.body.id_kelas}
+        const param = { id_kelas: req.params.id_kelas}
         kelas.destroy({where: param})
         .then(result => {
             res.json({
+                message : "data has been destroyed",
                 success : 1,
                 data : result
             })

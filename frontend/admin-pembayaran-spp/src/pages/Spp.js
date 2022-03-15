@@ -1,12 +1,13 @@
 import React from "react"
-import Navbar from "../components/Navbar"
 import { base_url } from "../config"
 import axios from "axios"
 import Modal from "react-modal"
 import ModalHeader from 'react-bootstrap/ModalHeader'
 import CloseButton from 'react-bootstrap/CloseButton'
 import Sidebar from "../components/Sidebar"
-
+import { PersonPlusFill,TrashFill,PencilFill } from 'react-bootstrap-icons';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 Modal.setAppElement('#root');
 
 
@@ -49,31 +50,37 @@ saveSpp = event => {
 
     //window.$('#modal_petugas-id').modal("hide");
     this.setState({tampilkan:false});
-    const data = {
+    let data = {
         id_spp: this.state.id_spp,
         angkatan: this.state.angkatan,
         tahun: this.state.tahun,
         nominal: this.state.nominal
-    }
-    if (this.state.angkatan) {
-        data.angkatan = this.state.angkatan
     }
     let url = base_url + "/spp"
     if (this.state.action === "insert") {
         axios.post(url, data, this.headerConfig())
         .then(response => {
             console.log(response.data.message)
-            this.getSpp()
+            if(response.data.message === "data has been inserted"){
+                this.setState(this.createNotification('success'))
+            }else{
+                this.setState(this.createNotification('error'))
+            }
         })
         .catch(error => console.log(error))
-        console.log(this.data.data)
+        this.getSpp()
     } else if(this.state.action === "update"){
         axios.put(url, data, this.headerConfig())
         .then(response => {
             console.log(response.data.message)
-            this.getSpp()
+            if(response.data.message === "data has been update"){
+                this.setState(this.createNotification('info'))
+            }else{
+                this.setState(this.createNotification('error'))
+            }
         })
         .catch(error => console.log(error))
+        this.getSpp()
     }
 }
     //add
@@ -130,14 +137,37 @@ saveSpp = event => {
             let url = base_url + "/spp/" + selectionItem.id_spp
             axios.delete(url, this.headerConfig())
             .then(response => {
-                console.log(response.data.message)
+                if(response.data.message === "data has been destroyed"){
+                    this.setState(this.createNotification('warning'))
+                }else{
+                    this.setState(this.createNotification('error'))
+                }
                 this.getSpp()
             })
             .catch(error => console.log(error))
-            
+            this.getSpp()
         }
     }
-
+    createNotification = (type) => {
+        return () => {
+          switch (type) {
+            case 'info':
+              NotificationManager.info('data has been update','Successfully Update');
+              break;
+            case 'success':
+              NotificationManager.success('data has been inserted', 'Successfully Add');
+              break;
+            case 'warning':
+              NotificationManager.warning('data has been destroyed', 'Successfully Delete', 3000);
+              break;
+            case 'error':
+              NotificationManager.error('Error message', 'Click me!', 5000, () => {
+                alert('callback');
+              });
+              break;
+          }
+    }
+}
     componentDidMount(){
         this.getSpp()
     }
@@ -147,16 +177,22 @@ saveSpp = event => {
             <div>
                 <Sidebar/>
                 <div className="container">
-                    <h3 className="text-bold text-info mt-2">Spp List</h3>
+                <br/><br/>
+                <div class="card">
+                <h5 class="card-header ">Pages Spp</h5>
+                <div class="card-body">
+
                     <button className="btn btn-success" onClick={() => this.Add()}>
-                        Tambah Spp
+                    <PersonPlusFill/> add
                     </button>
+                    <NotificationContainer/>
                     <br></br>
                     <br></br>
                     <table className="table table-bordered">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>No</th>
+                                <th>Id Spp</th>
                                 <th>Angkatan</th>
                                 <th>Tahun</th>
                                 <th>Nominal</th>
@@ -167,18 +203,19 @@ saveSpp = event => {
                             {this.state.spp.map((item, index) => (
                                 <tr key={index}>
                                     <td>{index+1}</td>
+                                    <td>{item.id_spp}</td>
                                     <td>{item.angkatan}</td>
                                     <td>{item.tahun}</td>
                                     <td>{item.nominal}</td>
                                     <td>
                                         <button className="btn btn-sm btn-info m-1"
                                         onClick={() => this.Edit(item)}>
-                                            Edit
+                                          <PencilFill/>  Edit
                                         </button>
 
                                         <button className="btn btn-sm btn-danger m-1"
                                         onClick={() => this.dropSpp(item)}>
-                                            Hapus
+                                          <TrashFill/>  Hapus
                                         </button>
                                     </td>
                                 </tr>
@@ -231,11 +268,12 @@ saveSpp = event => {
                                         required
                                         />
                                         Nominal
-                                        <input type="number" min="0.00" max="1000000.00" step="0.01" className="form-control mb-1"
+                                        <input type="number" className="form-control mb-1"
                                         value={this.state.nominal}
                                         onChange={ev => this.setState({nominal: ev.target.value})}
                                         required
                                         />
+                                        <br/>
                                         <button type="submit" className="btn btn-block btn-success">
                                             Simpan
                                         </button>
@@ -244,6 +282,8 @@ saveSpp = event => {
                                         
                                 </Modal>
                         </div>
+                </div>
+                </div>
                 </div>
             </div>
         )

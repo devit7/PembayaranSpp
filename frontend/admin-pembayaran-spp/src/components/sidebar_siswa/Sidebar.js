@@ -8,8 +8,8 @@ import { SidebarData } from './SidebarData';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
 import {RiAdminFill} from 'react-icons/ri';
-import Admin from './Admin';
-import Logout from './Logout';
+import Siswa from '../Siswa';
+
 const Nav = styled.div`
   background: #15171c;
   height: 50px;
@@ -17,9 +17,11 @@ const Nav = styled.div`
   justify-content: flex-start;
   align-items: center;
 `;
+
 const Putih = styled.div`
 color: #e1e9fc;
 `;
+
 const NavIcon = styled(Link)`
   margin-left: 2rem;
   font-size: 2rem;
@@ -28,6 +30,7 @@ const NavIcon = styled(Link)`
   justify-content: flex-start;
   align-items: center;
 `;
+
 const UserIcon = styled(Link)`
   margin-left: 75rem;
   font-size: 2rem;
@@ -36,6 +39,7 @@ const UserIcon = styled(Link)`
   justify-content: flex-start;
   align-items: center;
 `;
+
 const SidebarNav = styled.nav`
   background: #15171c;
   width: 250px;
@@ -70,7 +74,7 @@ const Sidebar = () => {
             <RiAdminFill/>
           </UserIcon >
           <Putih>
-            <Admin/>
+            <Siswa/>
           </Putih>
           
         </Nav>

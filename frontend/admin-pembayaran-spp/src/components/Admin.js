@@ -1,5 +1,4 @@
 import React from "react"
-import Navbar from "../components/Navbar"
 import axios from "axios"
 import { base_url } from "../config.js"
 export default class Admin extends React.Component{
@@ -26,7 +25,6 @@ export default class Admin extends React.Component{
         let admin = JSON.parse(localStorage.getItem('admin'))
         this.setState({adminName: admin.nama_petugas})
     }
-
     componentDidMount(){
 
         this.getAdmin()

@@ -1,5 +1,4 @@
 import React from "react"
-import Navbar from "../components/Navbar"
 import { base_url } from "../config"
 import $, { event } from "jquery";
 import axios from "axios"
@@ -7,6 +6,9 @@ import Modal from "react-modal"
 import ModalHeader from 'react-bootstrap/ModalHeader'
 import CloseButton from 'react-bootstrap/CloseButton'
 import Sidebar from "../components/Sidebar"
+import { PersonPlusFill,TrashFill,PencilFill } from 'react-bootstrap-icons';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 Modal.setAppElement('#root');
 
 class Kelas extends React.Component{
@@ -54,25 +56,31 @@ saveKelas = event => {
         jurusan: this.state.jurusan,
         angkatan: this.state.angkatan
     }
-    if (this.state.nama_kelas) {
-        data.nama_kelas = this.state.nama_kelas
-    }
     let url = base_url + "/kelas"
     if (this.state.action === "insert") {
         axios.post(url, data, this.headerConfig())
         .then(response => {
             console.log(response.data.message)
-            this.getKelas()
+            if(response.data.message === "data has been inserted"){
+                this.setState(this.createNotification('success'))
+            }else{
+                this.setState(this.createNotification('error'))
+            }
         })
-        
-        
-    } else if(this.state.action === "update"){
+        .catch(error => console.log(error))
+        this.getKelas()
+    }else if(this.state.action === "update"){
         axios.put(url, data, this.headerConfig())
         .then(response => {
             console.log(response.data.message)
-            this.getKelas()
+            if(response.data.message === "data has been update"){
+                this.setState(this.createNotification('info'))
+            }else{
+                this.setState(this.createNotification('error'))
+            }
         })
         .catch(error => console.log(error))
+        this.getKelas()
     }
 }
     //add
@@ -131,12 +139,38 @@ saveKelas = event => {
             axios.delete(url, this.headerConfig())
             .then(response => {
                 console.log(response.data.message)
-                this.getPetugas()
+                if(response.data.message === "data has been destroyed"){
+                    this.setState(this.createNotification('warning'))
+                }else{
+                    this.setState(this.createNotification('error'))
+                }
+                this.getKelas()
             })
+            this.getKelas()
             .catch(error => console.log(error))
+            
         }
     }
-
+    createNotification = (type) => {
+        return () => {
+          switch (type) {
+            case 'info':
+              NotificationManager.info('data has been update','Successfully Update');
+              break;
+            case 'success':
+              NotificationManager.success('data has been inserted', 'Successfully Add');
+              break;
+            case 'warning':
+              NotificationManager.warning('data has been destroyed', 'Successfully Delete', 3000);
+              break;
+            case 'error':
+              NotificationManager.error('Error message', 'Click me!', 5000, () => {
+                alert('callback');
+              });
+              break;
+          }
+    }
+}
     componentDidMount(){
         this.getKelas()
     }
@@ -146,16 +180,23 @@ saveKelas = event => {
             <div>
                 <Sidebar/>
                 <div className="container">
-                    <h3 className="text-bold text-info mt-2">Kelas List</h3>
+                <br/>
+                <div class="card">
+                <h5 class="card-header">Pages Kelas</h5>
+                <div class="card-body">
+
                     <button className="btn btn-success" onClick={() => this.Add()}>
-                        Tambah Kelas
+                    <PersonPlusFill/> add
                     </button>
-                    <br></br>
-                    <br></br>
+                    <NotificationContainer/>
+                    <br/>
+                    <br/>
+                    
                     <table className="table table-bordered">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>no</th>
+                                <th>Id Kelas</th>
                                 <th>Name Kelas</th>
                                 <th>Jurusan</th>
                                 <th>Angkatan</th>
@@ -166,18 +207,19 @@ saveKelas = event => {
                             {this.state.kelas.map((item, index) => (
                                 <tr key={index}>
                                     <td>{index+1}</td>
+                                    <td>{item.id_kelas}</td>
                                     <td>{item.nama_kelas}</td>
                                     <td>{item.jurusan}</td>
                                     <td>{item.angkatan}</td>
                                     <td>
                                         <button className="btn btn-sm btn-info m-1"
                                         onClick={() => this.Edit(item)}>
-                                            Edit
+                                          <PencilFill/>  Edit
                                         </button>
 
                                         <button className="btn btn-sm btn-danger m-1"
                                         onClick={() => this.dropKelas(item)}>
-                                            Hapus
+                                          <TrashFill/>  Hapus
                                         </button>
                                     </td>
                                 </tr>
@@ -230,11 +272,12 @@ saveKelas = event => {
                                         required
                                         />
                                         Angkatan
-                                        <input type="text" className="form-control mb-1"
+                                        <input type="number" className="form-control mb-1"
                                         value={this.state.angkatan}
                                         onChange={ev => this.setState({angkatan: ev.target.value})}
                                         required
                                         />
+                                        <br/>
                                         <button type="submit" className="btn btn-block btn-success">
                                             Simpan
                                         </button>
@@ -242,6 +285,9 @@ saveKelas = event => {
                                     </div>
                                         
                         </Modal>
+                        </div>
+                    </div>
+                    
                  </div>
             </div>
         </div>

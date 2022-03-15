@@ -8,8 +8,7 @@ import { SidebarData } from './SidebarData';
 import SubMenu from './SubMenu';
 import { IconContext } from 'react-icons/lib';
 import {RiAdminFill} from 'react-icons/ri';
-import Admin from './Admin';
-import Logout from './Logout';
+import Petugas from '../Petugas'
 const Nav = styled.div`
   background: #15171c;
   height: 50px;
@@ -70,7 +69,7 @@ const Sidebar = () => {
             <RiAdminFill/>
           </UserIcon >
           <Putih>
-            <Admin/>
+            <Petugas/>
           </Putih>
           
         </Nav>

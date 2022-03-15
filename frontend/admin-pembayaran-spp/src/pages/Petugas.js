@@ -1,18 +1,16 @@
 import React, { useState } from "react"
-import Navbar from "../components/Navbar"
 import { useTable, useGlobalFilter, useAsyncDebounce } from 'react-table'
 import { base_url } from "../config"
 import axios from "axios"
 import Modal from "react-modal"
 import ModalHeader from 'react-bootstrap/ModalHeader'
 import CloseButton from 'react-bootstrap/CloseButton'
-import GlobalFilter from '../table/petugas.table'
 import { PersonPlusFill,TrashFill,PencilFill } from 'react-bootstrap-icons';
 import Sidebar from "../components/Sidebar"
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-Modal.setAppElement('#root');
 
+Modal.setAppElement('#root');
 
 class Petugas extends React.Component{
 constructor(){
@@ -75,7 +73,6 @@ savePetugas = event => {
             }else{
                 this.setState(this.createNotification('error'))
             }
-            this.getPetugas()
         })
         .catch(error => console.log(error))
         this.getPetugas()
@@ -88,8 +85,8 @@ savePetugas = event => {
             }else{
                 this.setState(this.createNotification('error'))
             }
-            this.getPetugas()
         })
+        this.getPetugas()
         .catch(error => console.log(error))
     }
 }
@@ -107,7 +104,6 @@ savePetugas = event => {
         })
     }
 
-    
     //edit
     Edit = selectionItem => {
         this.setState({tampilkan:true});
@@ -120,7 +116,6 @@ savePetugas = event => {
             level: selectionItem.level
         })
     }
-
 
     getPetugas=()=>{
         let url = base_url+"/petugas"
@@ -142,7 +137,6 @@ savePetugas = event => {
         })
 
     }
-
     //drop
     dropPetugas = (selectionItem) => {
         if (window.confirm("are you sure to delete this data?")) {
@@ -180,35 +174,11 @@ savePetugas = event => {
               break;
           }
     }
-}
-    sorting=(col)=>{
-        let data = {
-            id_petugas: this.state.id_petugas,
-            username: this.state.username,
-            password: this.state.password,
-            nama_petugas: this.state.nama_petugas,
-            level: this.state.level
-        }
-        if(this.state.order === "ASC"){
-            const sorted =[...data].sort((a,b)=>
-            a[col].toLowerCase()>b[col].toLowerCase()?1:-1
-            );
-            this.setState({data:sorted})
-            this.setState({order:"DSC"})
-        }
-        if(this.state.order === "DSC"){
-            const sorted =[...data].sort((a,b)=>
-            a[col].toLowerCase()<b[col].toLowerCase()?1:-1
-            );
-            this.setState({data:sorted})
-            this.setState({order:"ASC"})
-        }
-    }
+}  
 
     componentDidMount(){
         this.getPetugas()
     }
-
 
     render(){
         return(
@@ -216,20 +186,23 @@ savePetugas = event => {
                 <Sidebar/>
 
                 <div className="container">
-                    <br/>
+                <br/><br/>
+                <div class="card">
+                <h5 class="card-header ">Pages Petugas</h5>
+                <div class="card-body">
+
                     <button className="btn btn-success" onClick={() => this.Add()}>
-                    <PersonPlusFill/>
+                    <PersonPlusFill/> add
                     </button>
+                    
                     <NotificationContainer/>
-                    <br></br>
-                    <br></br>
-                    <h3>
-        </h3>
+                    <br/>
+                    <br/>
                     <table className="table">
-                        <thead className="thead-dark">
+                        <thead className=" table thead-dark">
                             <tr class="filters">
                                 <th>No</th>
-                                <th scope="col" onClick={()=>this.sorting(this.id_petugas)} >Id</th>
+                                <th scope="col" onClick={()=>this.sorting(this.id_petugas)} >Id Petugas</th>
                                 <th scope="col">Nama Petugas</th>
                                 <th scope="col">Username</th>
                                 <th scope="col">Password</th>
@@ -315,17 +288,18 @@ savePetugas = event => {
                                                 <label for="exampleInputPassword1" className="form-label">LEVEL</label>
                                                 <select className="form-select" aria-label="Default select example" value={this.state.level} onChange={ev => this.setState({level: ev.target.value})}required>
                                                     <option selected>Open this select menu</option>
-                                                    <option value="1">petugas</option>
-                                                    <option value="2">admin</option>
+                                                    <option >petugas</option>
+                                                    <option >admin</option>
                                                 </select>
                                                 <br/>
                                                 <button type="submit" className="btn btn-block btn-success">
                                                     Simpan
                                                 </button>
                                             </form>
-                                        </div>
-                                        
+                                        </div>  
                         </Modal>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

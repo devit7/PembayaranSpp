@@ -6,6 +6,7 @@ import * as RiIcons from 'react-icons/ri';
 import * as BsIcons from 'react-icons/bs';
 import * as MdIcons from 'react-icons/md';
 import * as FcIcons from 'react-icons/fc';
+import * as HiIcons from 'react-icons/hi';
 import Logout from './Logout';
 
 export const SidebarData = [
@@ -13,7 +14,6 @@ export const SidebarData = [
     title: 'Home',
     path: '/',
     icon: <AiIcons.AiFillHome />,
-    iconClosed: <RiIcons.RiArrowDownSFill />,
   },
   {
     title: 'Managenent',
@@ -51,6 +51,11 @@ export const SidebarData = [
         icon: <FcIcons.FcMoneyTransfer/>
       }
     ]
+  },
+  {
+    title: 'Laporan',
+    path: '/',
+    icon: <HiIcons.HiDocumentReport />,
   },
   {
     title: <Logout/>,

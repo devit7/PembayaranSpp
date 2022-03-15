@@ -1,9 +1,9 @@
 import React from "react"
 import axios from "axios"
 import { base_url } from "../config.js"
-import Sidebar from '../components/Sidebar';
+import Sidebar_petugas from "../components/sidebar_petugas/Sidebar"
 import '../css/home.css'
-export default class Home extends React.Component{
+export default class Home_petugas extends React.Component{
     constructor(){
         super()
         this.state = {
@@ -25,10 +25,9 @@ export default class Home extends React.Component{
     render(){
         return(
             <div>
-                <Sidebar/>
+                <Sidebar_petugas/>
 
                 <br/>
-
                 <div className="container mt-2">
                     <div className="main-content">
                         <div className="header bg-gradient-primary pb-8 pt-5 pt-md-7">

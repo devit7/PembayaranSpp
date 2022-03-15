@@ -1,9 +1,12 @@
 const models = require("../../models/index");
 const pembayaran = models.pembayaran;
 const md5 = require('md5');
-const jwt = require('jsonwebtoken');
+const config = require('../auth/secret.json');
 
 
+const auth = require("../auth/authorize");
+const jwt = require("jsonwebtoken");
+const SECRET_KEY = "pembayaranspp";
 module.exports={
     controllerGetAll:(req,res)=>{
         pembayaran.findAll()
@@ -41,6 +44,7 @@ module.exports={
         pembayaran.create(data)
         .then(result => {
             res.json({
+                message: "data has been inserted",
                 success : 1,
                 data : result,data
             })
@@ -65,6 +69,7 @@ module.exports={
         pembayaran.update(data , {where: param})
         .then(result => {
             res.json({
+                message: "data has been update",
                 success : 1,
                 data : result,data
             })
@@ -76,10 +81,11 @@ module.exports={
         })
     },
     controllerDelete: (req,res)=>{
-        const param = { id_pembayaran: req.body.id_pembayaran}
+        const param = { id_pembayaran: req.params.id_pembayaran}
         pembayaran.destroy({where: param})
         .then(result => {
             res.json({
+                message : "data has been destroyed",
                 success : 1,
                 data : result
             })

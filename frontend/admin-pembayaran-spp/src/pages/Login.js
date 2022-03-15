@@ -20,7 +20,7 @@ class Login extends React.Component{
         let sendData = {
             username: this.state.username,
             password: this.state.password,
-            level: "admin"
+            level: this.state.level
         }
         console.log(sendData)
         let url = base_url + "/petugas/auth"
@@ -28,11 +28,23 @@ class Login extends React.Component{
             .then(response => {
                 this.setState({logged: response.data.logged})
                 if (this.state.logged) {
-                    let admin = response.data.data
-                    let token = response.data.token
-                    localStorage.setItem("admin", JSON.stringify(admin))
-                    localStorage.setItem("token", token)
-                    this.props.history.push("/")
+                    switch(this.state.level) {
+                        case "admin":
+                            let admin = response.data.data
+                            let token_admin = response.data.token
+                            localStorage.setItem("admin", JSON.stringify(admin))
+                            localStorage.setItem("token", token_admin)
+                            this.props.history.push("/")
+                          break;
+                        case "petugas":
+                            let petugas = response.data.data
+                            let token_petugas = response.data.token
+                            localStorage.setItem("petugas", JSON.stringify(petugas))
+                            localStorage.setItem("token", token_petugas)
+                            this.props.history.push("/home_petugas")
+                          break;
+                        default:
+                    }
                 } else {
                     this.setState({message: response.data.message})
                 }
@@ -45,29 +57,6 @@ class Login extends React.Component{
     render(){
         return(
             // container flex responsive ditengah dan rata
-            
-            /*
-            <div className="container d-flex h-100 justify-content-center align-items-center">
-                <div className="col-sm-6 card my-5">
-                    <div className="card-header text-white text-center">
-                        <h4>TESTER</h4>
-                        <strong className="text-warning">Admin Sign In</strong>
-                    </div>
-                    <div className="card-body">
-                        { !this.state.logged ?(
-                            <div className="alert alert-danger mt-1">{this.state.message}</div>
-                        ): null}
-                        <form onSubmit={ev => this.Login(ev)}>
-                            <input type="text" className="form-control mb-1" value={this.state.username} onChange={ev => this.setState({username: ev.target.value})} />
-                            <input type="password" className="form-control mb-1" value={this.state.password} onChange={ev => this.setState({password: ev.target.value})} autoComplete="false"/>
-                            <button className="btn btn-block btn-primary mb-1" type="submit">
-                                Sign In
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            */
 
            <div className="container d-flex h-100 justify-content-center align-items-center">
                <div className="col-sm-3 card my-5">
@@ -85,15 +74,20 @@ class Login extends React.Component{
                     <label >Password</label>
                     <input type="password" className="form-control" id="floatingPassword" placeholder="Password" value={this.state.password} onChange={ev => this.setState({password: ev.target.value})} autoComplete="false"/>
                     </div>
-                    <div className="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" value="remember-me"/> Remember me
-                    </label>
-                    </div>
+                    <br/>
+                    <label >Level</label>
+                    <select class="form-select" aria-label="Default select example" value={this.state.level} onChange={ev => this.setState({level: ev.target.value})} >
+                        <option selected>Open this select menu</option>
+                        <option value="admin">admin</option>
+                        <option value="petugas">petugas</option>
+                    </select>
+                    
+                    <br/>
                     <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
                     { !this.state.logged ?(
                     <div className="alert alert-danger mt-1">{this.state.message}</div>
                     ): null}
+                    <a class="dropdown-item" href="/login_siswa">are you student? Sign in</a>
                     <p className="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
                 </form>
                 

@@ -4,6 +4,8 @@ export default class Logout extends React.Component{
     Logout = () => {
         localStorage.removeItem("token")
         localStorage.removeItem("admin")
+        localStorage.removeItem("petugas")
+        localStorage.removeItem("siswa")
         window.location = "/login"
     }
     render(){

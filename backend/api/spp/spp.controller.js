@@ -38,6 +38,7 @@ module.exports={
         spp.create(data)
         .then(result => {
             res.json({
+                message: "data has been inserted",
                 success : 1,
                 data : result,data
             })
@@ -59,6 +60,7 @@ module.exports={
         spp.update(data , {where: param})
         .then(result => {
             res.json({
+                message: "data has been update",
                 success : 1,
                 data : result,data
             })
@@ -70,11 +72,11 @@ module.exports={
         })
     },
     controllerDelete:async (req,res)=>{
-        const param = { id_spp: req.body.id_spp}
+        const param = { id_spp: req.params.id_spp}
         spp.destroy({where: param})
         .then(result => {
             res.json({
-                success : 1,
+                message : "data has been destroyed",
                 data : result
             })
         })

@@ -15,5 +15,5 @@ router.get('/',authorize,controllerGetAll); //admin only
 router.get('/:id_spp',authorize, controllerGetId); //admin only
 router.post('/',authorize, controllerAdd); // all semua bisa acses
 router.put('/',authorize, controllerEdit); //admin only
-router.delete('/',authorize, controllerDelete); //admin only
+router.delete('/:id_spp',authorize, controllerDelete); //admin only
 module.exports = router;

@@ -5,12 +5,12 @@ import axios from "axios"
 import Modal from "react-modal"
 import ModalHeader from 'react-bootstrap/ModalHeader'
 import CloseButton from 'react-bootstrap/CloseButton'
-import Sidebar from "../components/Sidebar"
+import Sidebar_petugas from "../components/sidebar_petugas/Sidebar"
 import { PersonPlusFill,TrashFill,PencilFill } from 'react-bootstrap-icons';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 Modal.setAppElement('#root');
-class Pembayaran extends React.Component{
+class Pembayaran_petugas extends React.Component{
 constructor(){
     super()
     this.state = {
@@ -109,8 +109,6 @@ savePembayaran = event => {
             status:""
         })
     }
-
-    
     //edit
     Edit = selectionItem => {
         this.setState({tampilkan:true});
@@ -185,7 +183,6 @@ savePembayaran = event => {
         })
 
     }
-
     //drop
     dropPembayaran = (selectionItem) => {
         if (window.confirm("are you sure to delete this data?")) {
@@ -233,7 +230,7 @@ savePembayaran = event => {
     render(){
         return(
             <div>
-                <Sidebar/>
+                <Sidebar_petugas/>
                 <div className="container">
                 <br/><br/>
                 <div class="card">
@@ -369,4 +366,4 @@ savePembayaran = event => {
         )
     }
 }
-export default Pembayaran;
+export default Pembayaran_petugas;
