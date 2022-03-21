@@ -23,6 +23,9 @@ export default class Petugas extends React.Component{
     }
     getPetugas = () => {
         let admin = JSON.parse(localStorage.getItem('petugas'))
+        if(admin === null){
+            window.location = "/login";
+        }
         this.setState({adminName: admin.nama_petugas})
     }
     componentDidMount(){

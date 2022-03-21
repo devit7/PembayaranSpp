@@ -5,6 +5,7 @@ const{
     controllerGetId,
     controllerAdd,
     controllerEdit,
+    controllerGetAngkatan,
     controllerDelete
     } = require('./spp.controller');
     const authorize = require('../auth/authorize');
@@ -13,6 +14,7 @@ const{
 //routes
 router.get('/',authorize,controllerGetAll); //admin only
 router.get('/:id_spp',authorize, controllerGetId); //admin only
+router.get('/angkatan/:angkatan',authorize,controllerGetAngkatan);
 router.post('/',authorize, controllerAdd); // all semua bisa acses
 router.put('/',authorize, controllerEdit); //admin only
 router.delete('/:id_spp',authorize, controllerDelete); //admin only

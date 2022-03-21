@@ -237,7 +237,7 @@ saveSiswa = event => {
                 <Sidebar/>
                 <div className="container">
                 <br/><br/>
-                <div class="card">
+                <div class="card shadow-lg rounded">
                 <h5 class="card-header ">Pages Siswa</h5>
                 <div class="card-body">
 
@@ -341,7 +341,7 @@ saveSiswa = event => {
                                         <label className="form-label">Id kelas</label>
                                             <select select class="form-select" aria-label="Default select example"  value={this.state.id_kelas} onChange={ev => this.setState({id_kelas: ev.target.value})}required>
                                                     {this.state.kelas.map((item, index) => (
-                                                    <option >{item.id_kelas} - {item.nama_kelas}</option>
+                                                    <option >{item.id_kelas}</option>
                                                     ))}
                                             </select>
                                         Alamat
@@ -359,7 +359,7 @@ saveSiswa = event => {
                                         <label className="form-label">Id spp</label>
                                             <select select class="form-select" aria-label="Default select example"  value={this.state.id_spp} onChange={ev => this.setState({id_spp: ev.target.value})}required>
                                                     {this.state.spp.map((item, index) => (
-                                                    <option >{item.id_spp} - {item.nominal}</option>
+                                                    <option >{item.id_spp}</option>
                                                     ))}
                                             </select>
                                         <br/>

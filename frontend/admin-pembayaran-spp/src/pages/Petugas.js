@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { useTable, useGlobalFilter, useAsyncDebounce } from 'react-table'
 import { base_url } from "../config"
 import axios from "axios"
 import Modal from "react-modal"
@@ -9,6 +8,7 @@ import { PersonPlusFill,TrashFill,PencilFill } from 'react-bootstrap-icons';
 import Sidebar from "../components/Sidebar"
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+
 
 Modal.setAppElement('#root');
 
@@ -24,7 +24,10 @@ constructor(){
         password:"",
         nama_petugas:"",
         level:"ASC",
-        order:"",
+        orderby:"id_petugas",
+        keyword:"",
+        filter:[],
+        moment:[{ id_petugas: 0, nama_petugas: "", username: "", password: "", createdAt: "", updatedAt: "" }],
         tampilkan:false
     }
 
@@ -73,6 +76,7 @@ savePetugas = event => {
             }else{
                 this.setState(this.createNotification('error'))
             }
+            this.getPetugas()
         })
         .catch(error => console.log(error))
         this.getPetugas()
@@ -85,6 +89,7 @@ savePetugas = event => {
             }else{
                 this.setState(this.createNotification('error'))
             }
+            this.getPetugas()
         })
         this.getPetugas()
         .catch(error => console.log(error))
@@ -117,26 +122,6 @@ savePetugas = event => {
         })
     }
 
-    getPetugas=()=>{
-        let url = base_url+"/petugas"
-        axios.get(url , this.headerConfig())
-        .then(response => {
-            this.setState({petugas: response.data.data})
-            console.log(response.data.data)
-          
-        })
-        .catch(error => {
-            if (error.response) {
-                if(error.response.status) {
-                    window.alert(error.response.data.message)
-                    this.props.history.push("/login")
-                }
-            }else{
-                console.log(error);
-            }
-        })
-
-    }
     //drop
     dropPetugas = (selectionItem) => {
         if (window.confirm("are you sure to delete this data?")) {
@@ -174,8 +159,50 @@ savePetugas = event => {
               break;
           }
     }
-}  
+}
 
+getPetugas=()=>{
+            if((this.state.keyword === null)||(this.state.keyword === undefined) || (this.state.keyword === "")){
+                let url = base_url+"/petugas"
+                axios.get(url , this.headerConfig())
+                .then(response => {
+                    this.setState({filter: response.data.data})
+                    console.log(response.data.data)
+                
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if(error.response.status) {
+                            window.alert(error.response.data.message)
+                            this.props.history.push("/login")
+                        }
+                    }else{
+                        console.log(error);
+                    }
+                })
+            }else{
+                let url = base_url + "/petugas/"+this.state.orderby+"/" + this.state.keyword
+                axios.get(url , this.headerConfig())
+                .then(response => {
+                    this.setState({filter: response.data.data})
+                    console.log(response.data.data)
+                })
+                .catch(error => {
+                    if (error.response) {
+                        if(error.response.status) {
+                            window.alert(error.response.data.message)
+                            this.props.history.push("/login")
+                        }
+                    }else{
+                        console.log('data show')
+                        console.log(this.state.filter)
+                        console.log(error);
+                    }
+                })
+
+                console.log('test')
+            }
+}
     componentDidMount(){
         this.getPetugas()
     }
@@ -187,22 +214,29 @@ savePetugas = event => {
 
                 <div className="container">
                 <br/><br/>
-                <div class="card">
+                <div class="card shadow-lg rounded">
                 <h5 class="card-header ">Pages Petugas</h5>
                 <div class="card-body">
 
-                    <button className="btn btn-success" onClick={() => this.Add()}>
+                    <button className="btn btn-success float-start" onClick={() => this.Add()}>
                     <PersonPlusFill/> add
                     </button>
-                    
+                    <form className="float-end"> 
+                    <input className="" id="myInput" type="text" placeholder="Search.." value={this.state.keyword} onChange={ev => this.setState({keyword: ev.target.value})} onKeyUp={this.getPetugas} />
+                    <select id="selectby" value={this.state.orderby} onChange={ev => this.setState({orderby: ev.target.value})} onClick={this.getPetugas}>
+                        <option value='id_petugas'>id</option>
+                        <option value='level'>level</option>
+                        <option value='username'>username</option>
+                    </select>
+                    </form>
                     <NotificationContainer/>
-                    <br/>
-                    <br/>
-                    <table className="table">
-                        <thead className=" table thead-dark">
+                    
+                    <br/><br/><br/>
+                    <table className="table table-bordered">
+                        <thead className=" table ">
                             <tr class="filters">
                                 <th>No</th>
-                                <th scope="col" onClick={()=>this.sorting(this.id_petugas)} >Id Petugas</th>
+                                <th scope="col" >Id Petugas</th>
                                 <th scope="col">Nama Petugas</th>
                                 <th scope="col">Username</th>
                                 <th scope="col">Password</th>
@@ -210,8 +244,8 @@ savePetugas = event => {
                                 <th>Option</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {this.state.petugas.map((item, index) => (
+                        <tbody >
+                            {this.state.filter.map((item, index) => (
                                 <tr key={index}>
                                     <td>{index+1}</td>
                                     <td>{item.id_petugas}</td>
@@ -234,8 +268,8 @@ savePetugas = event => {
                             ))}
                         </tbody>
                     </table>
-                   
 
+                    
                     {/** modal petugas */}
                     <div className="modal fade" id="modal_petugas">
                         <Modal 

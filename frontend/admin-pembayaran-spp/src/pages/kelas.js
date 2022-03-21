@@ -66,6 +66,7 @@ saveKelas = event => {
             }else{
                 this.setState(this.createNotification('error'))
             }
+            this.getKelas()
         })
         .catch(error => console.log(error))
         this.getKelas()
@@ -78,6 +79,7 @@ saveKelas = event => {
             }else{
                 this.setState(this.createNotification('error'))
             }
+            this.getKelas()
         })
         .catch(error => console.log(error))
         this.getKelas()
@@ -181,7 +183,7 @@ saveKelas = event => {
                 <Sidebar/>
                 <div className="container">
                 <br/>
-                <div class="card">
+                <div class="card shadow-lg rounded">
                 <h5 class="card-header">Pages Kelas</h5>
                 <div class="card-body">
 

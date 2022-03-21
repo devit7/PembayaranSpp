@@ -12,6 +12,8 @@ import Home_petugas from "./pages/Home_petugas";
 import Home_siswa from "./pages/Home_siswa";
 import Pembayaran_petugas from "./pages/Pembayaran_petugas"
 import Login_siswa from "./pages/Login_siswa";
+import Laporan from "./pages/Laporan";
+
 export default class App extends React.Component{
   render(){
     return (
@@ -29,6 +31,7 @@ export default class App extends React.Component{
             <Route path="/siswa" component={Siswa}/>
             <Route path="/pembayaran" component={Pembayaran}/>
             <Route path="/pembayaran_petugas" component={Pembayaran_petugas}/>
+            <Route path="/laporan" component={Laporan}/>
             <Route path="/logout" component={Logout}/>
           </Switch>
       </Router>

@@ -66,6 +66,7 @@ saveSpp = event => {
             }else{
                 this.setState(this.createNotification('error'))
             }
+            this.getSpp()
         })
         .catch(error => console.log(error))
         this.getSpp()
@@ -78,6 +79,7 @@ saveSpp = event => {
             }else{
                 this.setState(this.createNotification('error'))
             }
+            this.getSpp()
         })
         .catch(error => console.log(error))
         this.getSpp()
@@ -178,7 +180,7 @@ saveSpp = event => {
                 <Sidebar/>
                 <div className="container">
                 <br/><br/>
-                <div class="card">
+                <div class="card  shadow-lg rounded">
                 <h5 class="card-header ">Pages Spp</h5>
                 <div class="card-body">
 

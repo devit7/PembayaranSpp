@@ -23,7 +23,11 @@ export default class Admin extends React.Component{
     }
     getAdmin = () => {
         let admin = JSON.parse(localStorage.getItem('admin'))
+        if(admin === null){
+            window.location = "/login";
+        }
         this.setState({adminName: admin.nama_petugas})
+        
     }
     componentDidMount(){
 

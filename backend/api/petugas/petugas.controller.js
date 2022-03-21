@@ -20,7 +20,37 @@ module.exports={
     },
     controllerGetId: async (req,res)=>{
         const param = { id_petugas: req.params.id_petugas}
-        petugas.findOne({where:param})
+        petugas.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetUsername: async (req,res)=>{
+        const param = { username: req.params.username}
+        petugas.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetlevel: async (req,res)=>{
+        const param = { level: req.params.level}
+        petugas.findAll({where:param})
         .then(result => {
             res.json({
                 success : 1,
@@ -36,7 +66,7 @@ module.exports={
     controllerAdd: async (req,res)=>{
         let data = {
             username : req.body.username,
-            password : req.body.password,
+            password : md5(req.body.password),
             nama_petugas : req.body.nama_petugas,
             level : req.body.level
         }

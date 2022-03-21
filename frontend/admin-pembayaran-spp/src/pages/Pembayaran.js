@@ -236,7 +236,7 @@ savePembayaran = event => {
                 <Sidebar/>
                 <div className="container">
                 <br/><br/>
-                <div class="card">
+                <div class="card shadow-lg rounded">
                 <h5 class="card-header ">Pages Pembayaran</h5>
                 <div class="card-body">
 
@@ -321,33 +321,87 @@ savePembayaran = event => {
                                         <label className="form-label">Id Petugas</label>
                                             <select select class="form-select" aria-label="Default select example"  value={this.state.id_petugas} onChange={ev => this.setState({id_petugas: ev.target.value})}required>
                                                     {this.state.petugas.map((item, index) => (
-                                                    <option >{item.id_petugas} - {item.nama_petugas}</option>
+                                                    <option >{item.id_petugas}</option>
                                                     ))}
                                             </select>
-                                        <label className="form-label">Id Petugas</label>
+                                        <label className="form-label">Nisn</label>
                                             <select select class="form-select" aria-label="Default select example"  value={this.state.nisn} onChange={ev => this.setState({nisn: ev.target.value})}required>
                                                     {this.state.siswa.map((item, index) => (
-                                                    <option >{item.nisn} - {item.nama}</option>
+                                                    <option >{item.nisn}</option>
                                                     ))}
                                             </select>
-                                        Tanggal Bayar
-                                        <input type="number" className="form-control mb-1"
-                                        value={this.state.tgl_bayar}
+                                            <label className="form-label">Tanggal Bayar</label>
+                                        <select class="form-select" aria-label="Default select example" value={this.state.tgl_bayar}
                                         onChange={ev => this.setState({tgl_bayar: ev.target.value})}
-                                        required
-                                        />
-                                        Bulan Bayar
-                                        <input type="number" className="form-control mb-1"
-                                        value={this.state.bulan_spp}
+                                        required>
+                                            <option selected>Open this select menu</option>
+                                            <option >1</option>
+                                            <option >2</option>
+                                            <option >3</option>
+                                            <option >4</option>
+                                            <option >5</option>
+                                            <option >6</option>
+                                            <option >7</option>
+                                            <option >8</option>
+                                            <option >9</option>
+                                            <option >10</option>
+                                            <option >11</option>
+                                            <option >12</option>
+                                            <option >13</option>
+                                            <option >14</option>
+                                            <option >15</option>
+                                            <option >16</option>
+                                            <option >17</option>
+                                            <option >18</option>
+                                            <option >19</option>
+                                            <option >20</option>
+                                            <option >21</option>
+                                            <option >22</option>
+                                            <option >23</option>
+                                            <option >24</option>
+                                            <option >25</option>
+                                            <option >26</option>
+                                            <option >27</option>
+                                            <option >28</option>
+                                            <option >29</option>
+                                            <option >30</option>
+                                            <option >31</option>
+                                        </select>
+                                        <label className="form-label">Bulan Bayar</label>
+                                            <select select class="form-select" aria-label="Default select example"  value={this.state.bulan_spp}
                                         onChange={ev => this.setState({bulan_spp: ev.target.value})}
-                                        required
-                                        />
-                                        tahun Bayar
-                                        <input type="number" className="form-control mb-1"
-                                        value={this.state.tahun_spp}
+                                        required>
+                                            <option selected>Open this select menu</option>
+                                            <option >1</option>
+                                            <option >2</option>
+                                            <option >3</option>
+                                            <option >4</option>
+                                            <option >5</option>
+                                            <option >6</option>
+                                            <option >7</option>
+                                            <option >8</option>
+                                            <option >9</option>
+                                            <option >10</option>
+                                            <option >11</option>
+                                            <option >12</option>
+                                        </select>
+                                        <label className="form-label">Tahun Bayar</label>
+                                            <select select class="form-select" aria-label="Default select example"  value={this.state.tahun_spp}
                                         onChange={ev => this.setState({tahun_spp: ev.target.value})}
-                                        required
-                                        />
+                                        required>
+                                            <option selected>Open this select menu</option>
+                                            <option >2020</option>
+                                            <option >2021</option>
+                                            <option >2022</option>
+                                            <option >2023</option>
+                                            <option >2024</option>
+                                            <option >2025</option>
+                                            <option >2026</option>
+                                            <option >2027</option>
+                                            <option >2028</option>
+                                            <option >2029</option>
+                                            <option >2030</option>
+                                        </select>
                                         <label for="exampleInputPassword1" className="form-label">Status</label>
                                         <select className="form-select" aria-label="Default select example" value={this.state.status} onChange={ev => this.setState({status: ev.target.value})}required>
                                                     <option selected>Open this select menu</option>

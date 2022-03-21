@@ -32,6 +32,21 @@ module.exports={
             })
         })
     },
+    controllerGetNisn:(req,res)=>{
+        const param = { nisn: req.params.nisn}
+        pembayaran.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
     controllerAdd:(req,res)=>{
         const data = {
             id_petugas : req.body.id_petugas,

@@ -29,6 +29,21 @@ module.exports={
             })
         })
     },
+    controllerGetAngkatan:async (req,res)=>{
+        const param = { angkatan: req.params.angkatan}
+        spp.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
     controllerAdd:async (req,res)=>{
         const data = {
             angkatan : req.body.angkatan,

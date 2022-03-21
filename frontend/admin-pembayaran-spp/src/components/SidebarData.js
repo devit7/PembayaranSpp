@@ -54,7 +54,7 @@ export const SidebarData = [
   },
   {
     title: 'Laporan',
-    path: '/',
+    path: '/laporan',
     icon: <HiIcons.HiDocumentReport />,
   },
   {
