@@ -23,7 +23,7 @@ constructor(){
         username:"",
         password:"",
         nama_petugas:"",
-        level:"ASC",
+        level:"",
         orderby:"id_petugas",
         keyword:"",
         filter:[],
@@ -162,7 +162,7 @@ savePetugas = event => {
 }
 
 getPetugas=()=>{
-            if((this.state.keyword === null)||(this.state.keyword === undefined) || (this.state.keyword === "")){
+            if((this.state.keyword === null)||(this.state.keyword === undefined)||(this.state.keyword === "")){
                 let url = base_url+"/petugas"
                 axios.get(url , this.headerConfig())
                 .then(response => {
@@ -224,9 +224,10 @@ getPetugas=()=>{
                     <form className="float-end"> 
                     <input className="" id="myInput" type="text" placeholder="Search.." value={this.state.keyword} onChange={ev => this.setState({keyword: ev.target.value})} onKeyUp={this.getPetugas} />
                     <select id="selectby" value={this.state.orderby} onChange={ev => this.setState({orderby: ev.target.value})} onClick={this.getPetugas}>
-                        <option value='id_petugas'>id</option>
+                        <option value='id_petugas'>id petugas</option>
                         <option value='level'>level</option>
                         <option value='username'>username</option>
+                        <option value='nama_petugas'>nama petugas</option>
                     </select>
                     </form>
                     <NotificationContainer/>

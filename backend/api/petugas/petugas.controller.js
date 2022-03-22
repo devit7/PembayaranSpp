@@ -48,6 +48,21 @@ module.exports={
             })
         })
     },
+    controllerGetNamapetugas: async (req,res)=>{
+        const param = { nama_petugas: req.params.nama_petugas}
+        petugas.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
     controllerGetlevel: async (req,res)=>{
         const param = { level: req.params.level}
         petugas.findAll({where:param})

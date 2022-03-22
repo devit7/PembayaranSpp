@@ -12,18 +12,13 @@ import Logout from '../Logout';
 export const SidebarData = [
   {
     title: 'Home',
-    path: '/',
+    path: '/home_petugas',
     icon: <AiIcons.AiFillHome />,
   },
   {
     title: 'Pembayaran',
     path: '/pembayaran_petugas',
     icon: <FcIcons.FcMoneyTransfer/>
-  },
-  {
-    title: 'Laporan',
-    path: '/',
-    icon: <HiIcons.HiDocumentReport />,
   },
   {
     title: <Logout/>,

@@ -14,9 +14,54 @@ module.exports={
             })
         })
     },
-    controllerGetId:async(req,res)=>{
+    controllerGetIdonly:async(req,res)=>{
         const param = { id_kelas: req.params.id_kelas}
         kelas.findOne({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetId:async(req,res)=>{
+        const param = { id_kelas: req.params.id_kelas}
+        kelas.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetNamakelas:async(req,res)=>{
+        const param = { nama_kelas: req.params.nama_kelas}
+        kelas.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetJurusan:async(req,res)=>{
+        const param = { jurusan: req.params.jurusan}
+        kelas.findAll({where:param})
         .then(result => {
             res.json({
                 success : 1,

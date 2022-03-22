@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 
 
 module.exports={
+
     controllerGetAll:async (req,res)=>{
         spp.findAll()
         .then(result=>{
@@ -16,7 +17,52 @@ module.exports={
     },
     controllerGetId:async (req,res)=>{
         const param = { id_spp: req.params.id_spp}
+        spp.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetIdonly:async(req,res)=>{
+        const param = { id_spp: req.params.id_spp}
         spp.findOne({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetTahun:async (req,res)=>{
+        const param = { tahun: req.params.tahun}
+        spp.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetNominal:async (req,res)=>{
+        const param = { nominal: req.params.nominal}
+        spp.findAll({where:param})
         .then(result => {
             res.json({
                 success : 1,

@@ -22,6 +22,11 @@ constructor(){
         angkatan:"",
         tahun:"",
         nominal:"",
+        orderby:"id_spp",
+        keyword:"",
+        filter:[],
+        moment:[{ id_petugas: 0, nama_petugas: "", username: "", password: "", createdAt: "", updatedAt: "" }],
+
         tampilkan:false
     }
     this.handelClose=this.handelClose.bind(this)
@@ -113,23 +118,46 @@ saveSpp = event => {
 
 
     getSpp=()=>{
-        let url = base_url+"/spp"
-        axios.get(url , this.headerConfig())
-        .then(response => {
-            this.setState({spp: response.data.data})
-            console.log(response.data.data)
-          
-        })
-        .catch(error => {
-            if (error.response) {
-                if(error.response.status) {
-                    window.alert(error.response.data.message)
-                    this.props.history.push("/login")
+        if((this.state.keyword === null)||(this.state.keyword === undefined)||(this.state.keyword === "")){
+            let url = base_url+"/spp"
+            axios.get(url , this.headerConfig())
+            .then(response => {
+                this.setState({filter: response.data.data})
+                console.log(response.data.data)
+            
+            })
+            .catch(error => {
+                if (error.response) {
+                    if(error.response.status) {
+                        window.alert(error.response.data.message)
+                        this.props.history.push("/login")
+                    }
+                }else{
+                    console.log(error);
                 }
-            }else{
-                console.log(error);
-            }
-        })
+            })
+        }else{
+            let url = base_url + "/spp/"+this.state.orderby+"/" + this.state.keyword
+            axios.get(url , this.headerConfig())
+            .then(response => {
+                this.setState({filter: response.data.data})
+                console.log(response.data.data)
+            })
+            .catch(error => {
+                if (error.response) {
+                    if(error.response.status) {
+                        window.alert(error.response.data.message)
+                        this.props.history.push("/login")
+                    }
+                }else{
+                    console.log('data show')
+                    console.log(this.state.filter)
+                    console.log(error);
+                }
+            })
+
+            console.log('test')
+        }
 
     }
 
@@ -187,6 +215,15 @@ saveSpp = event => {
                     <button className="btn btn-success" onClick={() => this.Add()}>
                     <PersonPlusFill/> add
                     </button>
+                    <form className="float-end"> 
+                    <input className="" id="myInput" type="text" placeholder="Search.." value={this.state.keyword} onChange={ev => this.setState({keyword: ev.target.value})} onKeyUp={this.getSpp} />
+                    <select id="selectby" value={this.state.orderby} onChange={ev => this.setState({orderby: ev.target.value})} onClick={this.getSpp}>
+                        <option value='id_spp'>id spp</option>
+                        <option value='angkatan'>angkatan</option>
+                        <option value='nominal'>nominal</option>
+                        <option value='tahun'>tahun</option>
+                    </select>
+                    </form>
                     <NotificationContainer/>
                     <br></br>
                     <br></br>
@@ -202,7 +239,7 @@ saveSpp = event => {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.spp.map((item, index) => (
+                            {this.state.filter.map((item, index) => (
                                 <tr key={index}>
                                     <td>{index+1}</td>
                                     <td>{item.id_spp}</td>

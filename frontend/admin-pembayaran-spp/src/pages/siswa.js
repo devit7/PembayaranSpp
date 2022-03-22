@@ -27,6 +27,11 @@ constructor(){
         alamat:"",
         no_tlp:"",
         id_spp:"",
+        orderby:"nisn",
+        keyword:"",
+        filter:[],
+        moment:[{ id_petugas: 0, nama_petugas: "", username: "", password: "", createdAt: "", updatedAt: "" }],
+
         tampilkan:false
     }
     this.handelClose=this.handelClose.bind(this)
@@ -167,23 +172,46 @@ saveSiswa = event => {
 
     }
     getSiswa=()=>{
-        let url = base_url+"/siswa"
-        axios.get(url , this.headerConfig())
-        .then(response => {
-            this.setState({siswa: response.data.data})
-            console.log(response.data.data)
-          
-        })
-        .catch(error => {
-            if (error.response) {
-                if(error.response.status) {
-                    window.alert(error.response.data.message)
-                    this.props.history.push("/login")
+        if((this.state.keyword === null)||(this.state.keyword === undefined)||(this.state.keyword === "")){
+            let url = base_url+"/siswa"
+            axios.get(url , this.headerConfig())
+            .then(response => {
+                this.setState({filter: response.data.data})
+                console.log(response.data.data)
+            
+            })
+            .catch(error => {
+                if (error.response) {
+                    if(error.response.status) {
+                        window.alert(error.response.data.message)
+                        this.props.history.push("/login")
+                    }
+                }else{
+                    console.log(error);
                 }
-            }else{
-                console.log(error);
-            }
-        })
+            })
+        }else{
+            let url = base_url + "/siswa/"+this.state.orderby+"/" + this.state.keyword
+            axios.get(url , this.headerConfig())
+            .then(response => {
+                this.setState({filter: response.data.data})
+                console.log(response.data.data)
+            })
+            .catch(error => {
+                if (error.response) {
+                    if(error.response.status) {
+                        window.alert(error.response.data.message)
+                        this.props.history.push("/login")
+                    }
+                }else{
+                    console.log('data show')
+                    console.log(this.state.filter)
+                    console.log(error);
+                }
+            })
+
+            console.log('test')
+        }
 
     }
 
@@ -244,6 +272,15 @@ saveSiswa = event => {
                     <button className="btn btn-success" onClick={() => this.Add()}>
                     <PersonPlusFill/> add
                     </button>
+                    <form className="float-end"> 
+                    <input className="" id="myInput" type="text" placeholder="Search.." value={this.state.keyword} onChange={ev => this.setState({keyword: ev.target.value})} onKeyUp={this.getSiswa} />
+                    <select id="selectby" value={this.state.orderby} onChange={ev => this.setState({orderby: ev.target.value})} onClick={this.getSiswa}>
+                        <option value='nisn'>nisn</option>
+                        <option value='nama'>nama</option>
+                        <option value='id_kelas'>id kelas</option>
+                        <option value='id_spp'>id spp</option>
+                    </select>
+                    </form>
                     <NotificationContainer/>
                     <br></br>
                     <br></br>
@@ -262,7 +299,7 @@ saveSiswa = event => {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.siswa.map((item, index) => (
+                            {this.state.filter.map((item, index) => (
                                 <tr key={index}>
                                     <td>{index+1}</td>
                                     <td>{item.nisn}</td>
@@ -341,7 +378,7 @@ saveSiswa = event => {
                                         <label className="form-label">Id kelas</label>
                                             <select select class="form-select" aria-label="Default select example"  value={this.state.id_kelas} onChange={ev => this.setState({id_kelas: ev.target.value})}required>
                                                     {this.state.kelas.map((item, index) => (
-                                                    <option >{item.id_kelas}</option>
+                                                    <option value={item.id_kelas}>{item.id_kelas} - {item.nama_kelas}</option>
                                                     ))}
                                             </select>
                                         Alamat
@@ -359,7 +396,7 @@ saveSiswa = event => {
                                         <label className="form-label">Id spp</label>
                                             <select select class="form-select" aria-label="Default select example"  value={this.state.id_spp} onChange={ev => this.setState({id_spp: ev.target.value})}required>
                                                     {this.state.spp.map((item, index) => (
-                                                    <option >{item.id_spp}</option>
+                                                    <option value={item.id_spp}>{item.id_spp} - {item.nominal}</option>
                                                     ))}
                                             </select>
                                         <br/>

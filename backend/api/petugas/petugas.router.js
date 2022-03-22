@@ -8,6 +8,7 @@ const{
     controllerEdit,
     controllerDelete,
     controllerGetUsername,
+    controllerGetNamapetugas,
     controllerAuth
     } = require('./petugas.controller');
     const authorize = require('../auth/authorize');
@@ -16,6 +17,7 @@ const{
 router.get('/',authorize,controllerGetAll); //admin only
 router.get('/id_petugas/:id_petugas',authorize, controllerGetId); //admin only
 router.get('/username/:username',authorize,controllerGetUsername);
+router.get('/nama_petugas/:nama_petugas',authorize,controllerGetNamapetugas);
 router.get('/level/:level',authorize, controllerGetlevel); //admin only
 router.post('/',authorize,controllerAdd); // all semua bisa acses
 router.put('/',authorize,controllerEdit); //admin only

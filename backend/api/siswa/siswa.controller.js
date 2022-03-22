@@ -14,9 +14,69 @@ module.exports={
             })
         })
     },
+    controllerGetIdonly:async(req,res)=>{
+        const param = { nisn: req.params.nisn}
+        spp.findOne({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
     controllerGetId:async(req,res)=>{
         const param = { nisn: req.params.nisn}
-        siswa.findOne({where:param})
+        siswa.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetNama:async(req,res)=>{
+        const param = { nama: req.params.nama}
+        siswa.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetKelas:async(req,res)=>{
+        const param = { id_kelas: req.params.id_kelas}
+        siswa.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetSpp:async(req,res)=>{
+        const param = { id_spp: req.params.id_spp}
+        siswa.findAll({where:param})
         .then(result => {
             res.json({
                 success : 1,

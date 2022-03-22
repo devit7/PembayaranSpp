@@ -24,8 +24,11 @@ constructor(){
         nisn:"",
         tgl_bayar:"",
         bulan_spp:"",
-        tahun_spp:"",
+        tahun_spp:[],
         status:"",
+        orderby:"id_pembayaran",
+        keyword:"",
+        filter:[],
         tampilkan:false
     }
     this.handelClose=this.handelClose.bind(this)
@@ -166,23 +169,46 @@ savePembayaran = event => {
 
     }
     getPembayaran=()=>{
-        let url = base_url+"/pembayaran"
-        axios.get(url , this.headerConfig())
-        .then(response => {
-            this.setState({pembayaran: response.data.data})
-            console.log(response.data.data)
-          
-        })
-        .catch(error => {
-            if (error.response) {
-                if(error.response.status) {
-                    window.alert(error.response.data.message)
-                    this.props.history.push("/login")
+        if((this.state.keyword === null)||(this.state.keyword === undefined)||(this.state.keyword === "")){
+            let url = base_url+"/pembayaran"
+            axios.get(url , this.headerConfig())
+            .then(response => {
+                this.setState({filter: response.data.data})
+                console.log(response.data.data)
+            
+            })
+            .catch(error => {
+                if (error.response) {
+                    if(error.response.status) {
+                        window.alert(error.response.data.message)
+                        this.props.history.push("/login")
+                    }
+                }else{
+                    console.log(error);
                 }
-            }else{
-                console.log(error);
-            }
-        })
+            })
+        }else{
+            let url = base_url + "/pembayaran/"+this.state.orderby+"/" + this.state.keyword
+            axios.get(url , this.headerConfig())
+            .then(response => {
+                this.setState({filter: response.data.data})
+                console.log(response.data.data)
+            })
+            .catch(error => {
+                if (error.response) {
+                    if(error.response.status) {
+                        window.alert(error.response.data.message)
+                        this.props.history.push("/login")
+                    }
+                }else{
+                    console.log('data show')
+                    console.log(this.state.filter)
+                    console.log(error);
+                }
+            })
+
+            console.log('test')
+        }
 
     }
 
@@ -224,10 +250,26 @@ savePembayaran = event => {
           }
     }
 }
+generateArrayOfYears=()=> {
+    // let max = new Date().getFullYear()
+    // let min = max - 9
+    // let years = []
+  
+    // for (let i = max; i >= min; i--) {
+    //   years.push(i)
+    // }
+    // console.log("ini tahun"+years)
+    console.log(this.state.pembayaran)
+    function isCherries(pembayaran) { 
+        return this.state.pembayaran.tahun_spp === 2020;
+      }
+    console.log("show"+this.state.pembayaran.find(isCherries))
+  }
     componentDidMount(){
         this.getPembayaran()
         this.getPetugas()
         this.getSiswa()
+        this.generateArrayOfYears()
     }
 
     render(){
@@ -243,6 +285,14 @@ savePembayaran = event => {
                     <button className="btn btn-success" onClick={() => this.Add()}>
                     <PersonPlusFill/> add
                     </button>
+                    <form className="float-end"> 
+                    <input className="" id="myInput" type="text" placeholder="Search.." value={this.state.keyword} onChange={ev => this.setState({keyword: ev.target.value})} onKeyUp={this.getPembayaran} />
+                    <select id="selectby" value={this.state.orderby} onChange={ev => this.setState({orderby: ev.target.value})} onClick={this.getPembayaran}>
+                        <option value='id_pembayaran'>id pembayaran</option>
+                        <option value='nisn'>nisn</option>
+                        <option value='status'>status</option>
+                    </select>
+                    </form>
                     <NotificationContainer/>
                     <br></br>
                     <br></br>
@@ -261,7 +311,7 @@ savePembayaran = event => {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.pembayaran.map((item, index) => (
+                            {this.state.filter.map((item, index) => (
                                 <tr key={index}>
                                     <td>{index+1}</td>
                                     <td>{item.id_pembayaran}</td>
@@ -321,13 +371,13 @@ savePembayaran = event => {
                                         <label className="form-label">Id Petugas</label>
                                             <select select class="form-select" aria-label="Default select example"  value={this.state.id_petugas} onChange={ev => this.setState({id_petugas: ev.target.value})}required>
                                                     {this.state.petugas.map((item, index) => (
-                                                    <option >{item.id_petugas}</option>
+                                                    <option value={item.id_petugas}>{item.id_petugas} - {item.nama_petugas}</option>
                                                     ))}
                                             </select>
                                         <label className="form-label">Nisn</label>
                                             <select select class="form-select" aria-label="Default select example"  value={this.state.nisn} onChange={ev => this.setState({nisn: ev.target.value})}required>
                                                     {this.state.siswa.map((item, index) => (
-                                                    <option >{item.nisn}</option>
+                                                    <option value={item.nisn} >{item.nisn} - {item.nama}</option>
                                                     ))}
                                             </select>
                                             <label className="form-label">Tanggal Bayar</label>

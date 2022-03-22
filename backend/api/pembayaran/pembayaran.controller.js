@@ -32,6 +32,122 @@ module.exports={
             })
         })
     },
+    controllerGetIdall:(req,res)=>{
+        const param = { id_pembayaran: req.params.id_pembayaran}
+        pembayaran.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetIdtahun:(req,res)=>{
+        const param = { tahun_spp: req.params.tahun_spp}
+        pembayaran.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetIdbulan:(req,res)=>{
+        const param = { bulan_spp: req.params.bulan_spp}
+        pembayaran.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetIdtahunbulan:(req,res)=>{
+        pembayaran.findAll({where: { tahun_spp: req.params.tahun_spp, bulan_spp: req.params.bulan_spp}})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetIdtahunstatus:(req,res)=>{
+        pembayaran.findAll({where: { tahun_spp: req.params.tahun_spp, status: req.params.status}})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetIdbulanstatus:(req,res)=>{
+        pembayaran.findAll({where: { bulan_spp: req.params.bulan_spp, status: req.params.status}})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetAllfilter:(req,res)=>{
+        pembayaran.findAll({ where: { tahun_spp: req.params.tahun_spp, bulan_spp: req.params.bulan_spp, status: req.params.status } })
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
+    controllerGetStatus:(req,res)=>{
+        const param = { status: req.params.status}
+        pembayaran.findAll({where:param})
+        .then(result => {
+            res.json({
+                success : 1,
+                data : result
+            })
+        })
+        .catch(error => {
+            res.json({
+                message: error.message
+            })
+        })
+    },
     controllerGetNisn:(req,res)=>{
         const param = { nisn: req.params.nisn}
         pembayaran.findAll({where:param})
