@@ -16,11 +16,6 @@ export const SidebarData = [
     icon: <AiIcons.AiFillHome />,
   },
   {
-    title: 'Laporan',
-    path: '/',
-    icon: <HiIcons.HiDocumentReport />,
-  },
-  {
     title: <Logout/>,
     path: '',
     icon: <AiIcons.AiOutlineLogout/>,

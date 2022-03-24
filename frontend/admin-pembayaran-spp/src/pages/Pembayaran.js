@@ -281,22 +281,38 @@ generateArrayOfYears=()=> {
                 <div class="card shadow-lg rounded">
                 <h5 class="card-header ">Pages Pembayaran</h5>
                 <div class="card-body">
-
-                    <button className="btn btn-success" onClick={() => this.Add()}>
+                    <button className="btn btn-outline-success" onClick={() => this.Add()}>
                     <PersonPlusFill/> add
                     </button>
-                    <form className="float-end"> 
+                    {/* <form className="float-end"> 
                     <input className="" id="myInput" type="text" placeholder="Search.." value={this.state.keyword} onChange={ev => this.setState({keyword: ev.target.value})} onKeyUp={this.getPembayaran} />
                     <select id="selectby" value={this.state.orderby} onChange={ev => this.setState({orderby: ev.target.value})} onClick={this.getPembayaran}>
                         <option value='id_pembayaran'>id pembayaran</option>
                         <option value='nisn'>nisn</option>
                         <option value='status'>status</option>
                     </select>
+                    </form> */}
+                    <form className="float-end">
+                    <div class="row">
+                        <div class="col">
+                        <input className="form-control " id="myInput" type="text" placeholder="Search.." value={this.state.keyword} onChange={ev => this.setState({keyword: ev.target.value})} onKeyUp={this.getPembayaran} />
+                    </div>
+                    <div class="col">
+                    <select id="selectby" class="form-select"style={({width: '150px'})} value={this.state.orderby} onChange={ev => this.setState({orderby: ev.target.value})} onClick={this.getPembayaran}>
+                        <option value='id_pembayaran'>id pembayaran</option>
+                            <option value='nisn'>nisn</option>
+                            <option value='status'>status</option>
+                        </select>
+                        </div>
+                    </div> 
                     </form>
                     <NotificationContainer/>
-                    <br></br>
-                    <br></br>
-                    <table className="table table-bordered">
+                    </div>
+                </div>
+                <br/>
+                <div class="card shadow-lg rounded">
+                <div class="card-body">
+                    <table className="table table-bordered border-primary">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -322,12 +338,12 @@ generateArrayOfYears=()=> {
                                     <td>{item.tahun_spp}</td>
                                     <td>{item.status}</td>
                                     <td>
-                                        <button className="btn btn-sm btn-info m-1"
+                                        <button className="btn btn-outline-primary"
                                         onClick={() => this.Edit(item)}>
                                           <PencilFill/>  Edit
                                         </button>
-
-                                        <button className="btn btn-sm btn-danger m-1"
+                                        &nbsp;&nbsp;
+                                        <button className="btn btn-outline-danger"
                                         onClick={() => this.dropPembayaran(item)}>
                                           <TrashFill/>  Hapus
                                         </button>

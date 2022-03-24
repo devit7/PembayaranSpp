@@ -143,8 +143,10 @@ export class ComponentToPrint extends React.Component {
                     Export to PDF
                     </button> */}
                     
-                    <form className=""> 
-                        <select  value={this.state.ordertahun} onChange={ev => this.setState({ordertahun: ev.target.value})} onClick={this.getPembayaran}>
+                    <form className="float-start"style={({width: '500px'})}> 
+                    <div class="row">
+                        <div class="col">
+                        <select class="form-select" value={this.state.ordertahun} onChange={ev => this.setState({ordertahun: ev.target.value})} onClick={this.getPembayaran}>
                             <option select value=''>Choose Tahun</option>
                             <option >2020</option>
                             <option >2021</option>
@@ -159,8 +161,9 @@ export class ComponentToPrint extends React.Component {
                             <option >2030</option>
     
                         </select>
-                        &nbsp;
-                        <select  value={this.state.orderbulan} onChange={ev => this.setState({orderbulan: ev.target.value})} onClick={this.getPembayaran}>
+                        </div>
+                        <div class="col">
+                        <select class="form-select" value={this.state.orderbulan} onChange={ev => this.setState({orderbulan: ev.target.value})} onClick={this.getPembayaran}>
                             <option select value=''>Choose Bulan</option>
                             <option >1</option>
                             <option >2</option>
@@ -175,24 +178,33 @@ export class ComponentToPrint extends React.Component {
                             <option >11</option>
                             <option >12</option>
                         </select>
-                        &nbsp;
-                        <select  value={this.state.orderstatus} onChange={ev => this.setState({orderstatus: ev.target.value})} onClick={this.getPembayaran}>
+                        </div>
+                        <div class="col">
+                        <select class="form-select" value={this.state.orderstatus} onChange={ev => this.setState({orderstatus: ev.target.value})} onClick={this.getPembayaran}>
                             <option select value=''>Choose Status</option>
                             <option >Sudah Bayar</option>
                             <option >Belum Bayar</option>
                         </select>
-    
-    
-                        <select  className="float-end" id="selectby" value={this.state.orderby} onChange={ev => this.setState({orderby: ev.target.value})} onClick={this.getPembayaran}>
-                            <option value='id_pembayaran'>id pembayaran</option>
-                        </select>
-                        <input className="float-end" id="myInput" type="text" placeholder="Search.." value={this.state.keyword} onChange={ev => this.setState({keyword: ev.target.value})} onKeyUp={this.getPembayaran} />
-                        
+                        </div>
+                        </div>                  
+                    </form>
+                    <form className="float-end">  
+                    <div class="row">
+                            <div class="col">
+                            <input className="form-control float-end" id="myInput" type="text" placeholder="Search.." value={this.state.keyword} onChange={ev => this.setState({keyword: ev.target.value})} onKeyUp={this.getPembayaran} />                     
+                        </div>
+                        <div class="col">
+                            <select  className="form-select float-end" id="selectby" value={this.state.orderby} onChange={ev => this.setState({orderby: ev.target.value})} onClick={this.getPembayaran}>
+                                <option value='id_pembayaran'>id pembayaran</option>
+                                <option value='nisn'>nisn</option>
+                            </select>
+                        </div>
+                        </div> 
                     </form>
                     {/* <PDFExport ref={this.pdfExportComponent} 
                     paperSize='Legal' margin="2cm"
                     > */}
-                    <br/>
+                    <br/><br/><br/>
                     <table className="table table-bordered">
                             <thead>
                                 <tr>

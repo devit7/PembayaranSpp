@@ -16,7 +16,7 @@ module.exports={
     },
     controllerGetIdonly:async(req,res)=>{
         const param = { nisn: req.params.nisn}
-        spp.findOne({where:param})
+        siswa.findOne({where:param})
         .then(result => {
             res.json({
                 success : 1,

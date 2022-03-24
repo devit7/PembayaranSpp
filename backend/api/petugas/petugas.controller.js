@@ -104,7 +104,7 @@ module.exports={
         const data = {
             id_petugas: req.body.id_petugas,
             username : req.body.username,
-            password : req.body.password,
+            password : md5(req.body.password),
             nama_petugas : req.body.nama_petugas,
             level : req.body.level
         }
@@ -140,7 +140,7 @@ module.exports={
     controllerAuth: async (req,res)=>{
         const data = {
             username : req.body.username,
-            password : req.body.password,
+            password :  md5(req.body.password),
             level : req.body.level
         }
         let result = await petugas.findOne({where: data})

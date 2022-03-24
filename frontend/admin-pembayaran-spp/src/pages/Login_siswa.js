@@ -54,12 +54,12 @@ class Login_siswa extends React.Component{
                 
                     <div className="">
                     <label >Nisn</label>
-                    <input type="password" className="form-control " id="floatingInput" placeholder="Username" value={this.state.nisn} onChange={ev => this.setState({nisn: ev.target.value})}/>
+                    <input type="password" className="form-control " id="floatingInput" placeholder="nisn" value={this.state.nisn} onChange={ev => this.setState({nisn: ev.target.value})}/>
                     </div>
                     <br/>
                     <div className="">
                     <label >Name</label>
-                    <input type="text" className="form-control" id="floatingPassword" placeholder="Password" value={this.state.nama} onChange={ev => this.setState({nama: ev.target.value})} autoComplete="false"/>
+                    <input type="text" className="form-control" id="floatingPassword" placeholder="name" value={this.state.nama} onChange={ev => this.setState({nama: ev.target.value})} autoComplete="false"/>
                     </div>
                     
                     <br/>

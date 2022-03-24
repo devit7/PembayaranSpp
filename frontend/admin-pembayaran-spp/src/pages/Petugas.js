@@ -9,7 +9,6 @@ import Sidebar from "../components/Sidebar"
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
-
 Modal.setAppElement('#root');
 
 class Petugas extends React.Component{
@@ -126,6 +125,7 @@ savePetugas = event => {
     dropPetugas = (selectionItem) => {
         if (window.confirm("are you sure to delete this data?")) {
             let url = base_url + "/petugas/" + selectionItem.id_petugas
+            console.log(selectionItem.id_petugas)
             axios.delete(url, this.headerConfig())
             .then(response => {
                 console.log(response.data.message)
@@ -210,31 +210,51 @@ getPetugas=()=>{
     render(){
         return(
             <div>
-                <Sidebar/>
+            <Sidebar/>
 
-                <div className="container">
-                <br/><br/>
-                <div class="card shadow-lg rounded">
-                <h5 class="card-header ">Pages Petugas</h5>
-                <div class="card-body">
-
-                    <button className="btn btn-success float-start" onClick={() => this.Add()}>
+            <div className="container">
+            <NotificationContainer/>
+            <br/><br/>
+            <div class="card shadow-lg rounded">
+            <h5 class="card-header">Pages Petugas</h5>
+            <div class="card-body">
+                    <button className="btn btn-outline-success" onClick={() => this.Add()}>
                     <PersonPlusFill/> add
                     </button>
-                    <form className="float-end"> 
-                    <input className="" id="myInput" type="text" placeholder="Search.." value={this.state.keyword} onChange={ev => this.setState({keyword: ev.target.value})} onKeyUp={this.getPetugas} />
-                    <select id="selectby" value={this.state.orderby} onChange={ev => this.setState({orderby: ev.target.value})} onClick={this.getPetugas}>
-                        <option value='id_petugas'>id petugas</option>
-                        <option value='level'>level</option>
-                        <option value='username'>username</option>
-                        <option value='nama_petugas'>nama petugas</option>
-                    </select>
+                    <form className="float-end">
+                        <div class="row">
+                            <div class="col">
+                            <input className="form-control " id="myInput" type="text" placeholder="Search.." value={this.state.keyword} onChange={ev => this.setState({keyword: ev.target.value})} onKeyUp={this.getPetugas} />
+                        </div>
+                        <div class="col">
+                        <select id="selectby" class="form-select"style={({width: '150px'})} value={this.state.orderby} onChange={ev => this.setState({orderby: ev.target.value})} onClick={this.getPetugas}>
+                                <option value='id_petugas'>id petugas</option>
+                                <option value='level'>level</option>
+                                <option value='username'>username</option>
+                                <option value='nama_petugas'>nama petugas</option>
+                            </select>
+                            </div>
+                        </div> 
                     </form>
-                    <NotificationContainer/>
+                </div>
+                </div>
+                <br/>
+                <div class="card shadow-lg rounded">
+                <div class="card-body">
                     
-                    <br/><br/><br/>
-                    <table className="table table-bordered">
-                        <thead className=" table ">
+                    {/* <form className="floa">
+                        <input class="form-control w-25" type="text" placeholder="Search" aria-label="Search"/>
+                        <select class="form-select " aria-label="Default select example" style={({width: '200px'})}>
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                        </select>
+                    </form> */}
+                    
+                    
+                    <table className="table table-bordered border-primary">
+                        <thead className=" ">
                             <tr class="filters">
                                 <th>No</th>
                                 <th scope="col" >Id Petugas</th>
@@ -255,12 +275,12 @@ getPetugas=()=>{
                                     <td>{item.password}</td>
                                     <td>{item.level}</td>
                                     <td>
-                                        <button className="btn btn-sm btn-info m-1"
+                                        <button className="btn btn-outline-primary"
                                         onClick={() => this.Edit(item)}>
                                             <PencilFill/> Edit
                                         </button>
-
-                                        <button className="btn btn-sm btn-danger m-1"
+                                        &nbsp;&nbsp;
+                                        <button className="btn btn-outline-danger"
                                         onClick={() => this.dropPetugas(item)}>
                                             <TrashFill/> Hapus
                                         </button>
