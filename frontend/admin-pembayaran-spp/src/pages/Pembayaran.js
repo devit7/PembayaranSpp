@@ -6,7 +6,7 @@ import Modal from "react-modal"
 import ModalHeader from 'react-bootstrap/ModalHeader'
 import CloseButton from 'react-bootstrap/CloseButton'
 import Sidebar from "../components/Sidebar"
-import { PersonPlusFill,TrashFill,PencilFill } from 'react-bootstrap-icons';
+import { PersonPlusFill,TrashFill,CurrencyDollar } from 'react-bootstrap-icons';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 Modal.setAppElement('#root');
@@ -20,8 +20,8 @@ constructor(){
         petugas:[],
         siswa:[],
         id_pembayaran:"",
-        id_petugas:"",
-        nisn:"",
+        id_petugas:null,
+        nisn:[],
         tgl_bayar:"",
         bulan_spp:"",
         tahun_spp:[],
@@ -52,37 +52,55 @@ handelClose(){
     this.setState({tampilkan:false})
 }
 
-savePembayaran = event => {
-    event.preventDefault()
-
-    //window.$('#modal_petugas-id').modal("hide");
-    this.setState({tampilkan:false});
-    const data = {
-        id_pembayaran: this.state.id_pembayaran,
-        id_petugas: this.state.id_petugas,
-        nisn: this.state.nisn,
-        tgl_bayar: this.state.tgl_bayar,
-        bulan_spp: this.state.bulan_spp,
-        tahun_spp:this.state.tahun_spp,
-        status:this.state.status
+    //add
+    Add = () => {
+        //$('#modal_petugas-id').modal("show");
+        const d = new Date();
+        let year = d.getFullYear();
+        var mm = String(d.getMonth() + 1).padStart(2, '0');
+        for (var i=0; i<this.state.siswa.length; i++) {
+            this.state.siswa[i].checked = false
+                const data ={
+                    id_petugas: null,
+                    nisn:this.state.siswa[i].nisn,
+                    bulan_spp:mm,
+                    tahun_spp:year,
+                    status:"Belum Bayar"
+                }
+                let url = base_url + "/pembayaran"
+                axios.post(url, data, this.headerConfig())
+                .then(response => {
+                    console.log(response.data.message)
+                    if(response.data.message === "data has been inserted"){
+                        this.setState(this.createNotification('success'))
+                    }else{
+                        this.setState(this.createNotification('error'))
+                    }
+                    this.getPembayaran()
+                })
+                .catch(error => console.log(error))
+                this.getPembayaran()
+                console.log(this.data)
+            
+        }
     }
 
-    let url = base_url + "/pembayaran"
-    if (this.state.action === "insert") {
-        axios.post(url, data, this.headerConfig())
-        .then(response => {
-            console.log(response.data.message)
-            if(response.data.message === "data has been inserted"){
-                this.setState(this.createNotification('success'))
-            }else{
-                this.setState(this.createNotification('error'))
-            }
-            this.getPembayaran()
-        })
-        .catch(error => console.log(error))
-        this.getPembayaran()
-        console.log(this.data)
-    } else if(this.state.action === "update"){
+    //edit
+    Edit = selectionItem => {
+        let admin = JSON.parse(localStorage.getItem('admin'))
+        if(admin === null){
+            window.location = "/login";
+        }
+        let adminName= admin.id_petugas
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        const data={
+            id_pembayaran: selectionItem.id_pembayaran,
+            id_petugas:adminName,
+            tgl_bayar: dd,
+            status:"Sudah Bayar"
+        }
+        let url = base_url + "/pembayaran"
         axios.put(url, data, this.headerConfig())
         .then(response => {
             console.log(response.data.message)
@@ -96,64 +114,12 @@ savePembayaran = event => {
         this.getPembayaran()
         .catch(error => console.log(error))
     }
-}
-    //add
-    Add = () => {
-        //$('#modal_petugas-id').modal("show");
-        this.setState({tampilkan:true});
-        this.setState({
-            action: "insert",
-            id_pembayaran:0,
-            id_petugas:"",
-            nisn:"",
-            tgl_bayar:"",
-            bulan_spp:"",
-            tahun_spp:"",
-            status:""
-        })
-    }
-
-    
-    //edit
-    Edit = selectionItem => {
-        this.setState({tampilkan:true});
-        this.setState({
-            action: "update",
-            id_pembayaran: selectionItem.id_pembayaran,
-            id_petugas:selectionItem.id_petugas,
-            nisn:selectionItem.nisn,
-            tgl_bayar:selectionItem.tgl_bayar,
-            bulan_spp:selectionItem.bulan_spp,
-            tahun_spp:selectionItem.tahun_spp,
-            status:selectionItem.status
-        })
-    }
     getSiswa=()=>{
         let url = base_url+"/siswa"
         axios.get(url , this.headerConfig())
         .then(response => {
             this.setState({siswa: response.data.data})
-            console.log(response.data.data)
-          
-        })
-        .catch(error => {
-            if (error.response) {
-                if(error.response.status) {
-                    window.alert(error.response.data.message)
-                    this.props.history.push("/login")
-                }
-            }else{
-                console.log(error);
-            }
-        })
-
-    }
-    getPetugas=()=>{
-        let url = base_url+"/petugas"
-        axios.get(url , this.headerConfig())
-        .then(response => {
-            this.setState({petugas: response.data.data})
-            console.log(response.data.data)
+            console.log(this.state.siswa)
           
         })
         .catch(error => {
@@ -250,26 +216,9 @@ savePembayaran = event => {
           }
     }
 }
-generateArrayOfYears=()=> {
-    // let max = new Date().getFullYear()
-    // let min = max - 9
-    // let years = []
-  
-    // for (let i = max; i >= min; i--) {
-    //   years.push(i)
-    // }
-    // console.log("ini tahun"+years)
-    console.log(this.state.pembayaran)
-    function isCherries(pembayaran) { 
-        return this.state.pembayaran.tahun_spp === 2020;
-      }
-    console.log("show"+this.state.pembayaran.find(isCherries))
-  }
     componentDidMount(){
         this.getPembayaran()
-        this.getPetugas()
         this.getSiswa()
-        this.generateArrayOfYears()
     }
 
     render(){
@@ -320,8 +269,8 @@ generateArrayOfYears=()=> {
                                 <th>Id Petugas</th>
                                 <th>Nisn</th>
                                 <th>Tgl Bayar</th>
-                                <th>Bulan Bayar</th>
-                                <th>Tahun Bayar</th>
+                                <th>Spp Bulan</th>
+                                <th>Spp Tahun</th>
                                 <th>Status</th>
                                 <th>Option</th>
                             </tr>
@@ -338,9 +287,9 @@ generateArrayOfYears=()=> {
                                     <td>{item.tahun_spp}</td>
                                     <td>{item.status}</td>
                                     <td>
-                                        <button className="btn btn-outline-primary"
+                                        <button className="btn btn-outline-success"
                                         onClick={() => this.Edit(item)}>
-                                          <PencilFill/>  Edit
+                                          <CurrencyDollar/>  Bayar
                                         </button>
                                         &nbsp;&nbsp;
                                         <button className="btn btn-outline-danger"
@@ -352,140 +301,10 @@ generateArrayOfYears=()=> {
                             ))}
                         </tbody>
                     </table>
-                   
-
-                    {/** modal petugas */}
-                    <div className="modal fade" id="modal_pembayaran">
-                    <Modal 
-                        isOpen={this.state.tampilkan}
-                        contentLabel="Minimal Modal Example"
-                        style={{
-                            content: {
-                                border: '0',
-                                borderRadius: '4px',
-                                bottom: 'auto',
-                                minHeight: '10rem',
-                                left: '50%',
-                                padding: '2rem',
-                                position: 'fixed',
-                                right: 'auto',
-                                top: '50%',
-                                transform: 'translate(-50%,-50%)',
-                                minWidth: '20rem',
-                                width: '30%',
-                                maxWidth: '60rem'
-                            }
-                            }
-                        }
-                    >
-                        <ModalHeader>
-                        <h4>Form Petugas</h4>
-                        <CloseButton onClick={this.handelClose}/>
-                        </ModalHeader>
-                                <div className="modal-body">
-                                    <form onSubmit={ev => this.savePembayaran(ev)}>
-                                        <label className="form-label">Id Petugas</label>
-                                            <select select class="form-select" aria-label="Default select example"  value={this.state.id_petugas} onChange={ev => this.setState({id_petugas: ev.target.value})}required>
-                                                    {this.state.petugas.map((item, index) => (
-                                                    <option value={item.id_petugas}>{item.id_petugas} - {item.nama_petugas}</option>
-                                                    ))}
-                                            </select>
-                                        <label className="form-label">Nisn</label>
-                                            <select select class="form-select" aria-label="Default select example"  value={this.state.nisn} onChange={ev => this.setState({nisn: ev.target.value})}required>
-                                                    {this.state.siswa.map((item, index) => (
-                                                    <option value={item.nisn} >{item.nisn} - {item.nama}</option>
-                                                    ))}
-                                            </select>
-                                            <label className="form-label">Tanggal Bayar</label>
-                                        <select class="form-select" aria-label="Default select example" value={this.state.tgl_bayar}
-                                        onChange={ev => this.setState({tgl_bayar: ev.target.value})}
-                                        required>
-                                            <option selected>Open this select menu</option>
-                                            <option >1</option>
-                                            <option >2</option>
-                                            <option >3</option>
-                                            <option >4</option>
-                                            <option >5</option>
-                                            <option >6</option>
-                                            <option >7</option>
-                                            <option >8</option>
-                                            <option >9</option>
-                                            <option >10</option>
-                                            <option >11</option>
-                                            <option >12</option>
-                                            <option >13</option>
-                                            <option >14</option>
-                                            <option >15</option>
-                                            <option >16</option>
-                                            <option >17</option>
-                                            <option >18</option>
-                                            <option >19</option>
-                                            <option >20</option>
-                                            <option >21</option>
-                                            <option >22</option>
-                                            <option >23</option>
-                                            <option >24</option>
-                                            <option >25</option>
-                                            <option >26</option>
-                                            <option >27</option>
-                                            <option >28</option>
-                                            <option >29</option>
-                                            <option >30</option>
-                                            <option >31</option>
-                                        </select>
-                                        <label className="form-label">Bulan Bayar</label>
-                                            <select select class="form-select" aria-label="Default select example"  value={this.state.bulan_spp}
-                                        onChange={ev => this.setState({bulan_spp: ev.target.value})}
-                                        required>
-                                            <option selected>Open this select menu</option>
-                                            <option >1</option>
-                                            <option >2</option>
-                                            <option >3</option>
-                                            <option >4</option>
-                                            <option >5</option>
-                                            <option >6</option>
-                                            <option >7</option>
-                                            <option >8</option>
-                                            <option >9</option>
-                                            <option >10</option>
-                                            <option >11</option>
-                                            <option >12</option>
-                                        </select>
-                                        <label className="form-label">Tahun Bayar</label>
-                                            <select select class="form-select" aria-label="Default select example"  value={this.state.tahun_spp}
-                                        onChange={ev => this.setState({tahun_spp: ev.target.value})}
-                                        required>
-                                            <option selected>Open this select menu</option>
-                                            <option >2020</option>
-                                            <option >2021</option>
-                                            <option >2022</option>
-                                            <option >2023</option>
-                                            <option >2024</option>
-                                            <option >2025</option>
-                                            <option >2026</option>
-                                            <option >2027</option>
-                                            <option >2028</option>
-                                            <option >2029</option>
-                                            <option >2030</option>
-                                        </select>
-                                        <label for="exampleInputPassword1" className="form-label">Status</label>
-                                        <select className="form-select" aria-label="Default select example" value={this.state.status} onChange={ev => this.setState({status: ev.target.value})}required>
-                                                    <option selected>Open this select menu</option>
-                                                    <option >Sudah Bayar</option>
-                                                    <option >Belum Bayar</option>
-                                        </select>
-                                        <br/>
-                                        <button type="submit" className="btn btn-block btn-success">
-                                            Simpan
-                                        </button>
-                                    </form>
-                                </div>
-                            </Modal>
-                        </div>
+                    </div>
                     </div>
                 </div>
-                </div>
-                </div>
+            </div>
         )
     }
 }

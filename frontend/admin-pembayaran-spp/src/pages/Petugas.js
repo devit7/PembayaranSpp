@@ -260,7 +260,6 @@ getPetugas=()=>{
                                 <th scope="col" >Id Petugas</th>
                                 <th scope="col">Nama Petugas</th>
                                 <th scope="col">Username</th>
-                                <th scope="col">Password</th>
                                 <th scope="col">Level</th>
                                 <th>Option</th>
                             </tr>
@@ -272,7 +271,6 @@ getPetugas=()=>{
                                     <td>{item.id_petugas}</td>
                                     <td>{item.nama_petugas}</td>
                                     <td>{item.username}</td>
-                                    <td>{item.password}</td>
                                     <td>{item.level}</td>
                                     <td>
                                         <button className="btn btn-outline-primary"
