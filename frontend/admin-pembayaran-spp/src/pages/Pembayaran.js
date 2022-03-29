@@ -132,7 +132,25 @@ handelClose(){
                 console.log(error);
             }
         })
+        
 
+    }
+    getPetugas=()=>{
+        let url = base_url+"/petugas"
+        axios.get(url,this.headerConfig())
+        .then(response => {
+            this.setState({petugas: response.data.data})
+        })
+        .catch(error => {
+            if (error.response) {
+                if(error.response.status) {
+                    window.alert(error.response.data.message)
+                    this.props.history.push("/login")
+                }
+            }else{
+                console.log(error);
+            }
+        })
     }
     getPembayaran=()=>{
         if((this.state.keyword === null)||(this.state.keyword === undefined)||(this.state.keyword === "")){
@@ -177,7 +195,6 @@ handelClose(){
         }
 
     }
-
     //drop
     dropPembayaran = (selectionItem) => {
         if (window.confirm("are you sure to delete this data?")) {
@@ -219,6 +236,7 @@ handelClose(){
     componentDidMount(){
         this.getPembayaran()
         this.getSiswa()
+        this.getPetugas()
     }
 
     render(){
@@ -266,7 +284,7 @@ handelClose(){
                             <tr>
                                 <th>No</th>
                                 <th>Id Pembayaran</th>
-                                <th>Id Petugas</th>
+                                <th>Petugas</th>
                                 <th>Nisn</th>
                                 <th>Tgl Bayar</th>
                                 <th>Spp Bulan</th>
@@ -280,7 +298,7 @@ handelClose(){
                                 <tr key={index}>
                                     <td>{index+1}</td>
                                     <td>{item.id_pembayaran}</td>
-                                    <td>{item.id_petugas}</td>
+                                    <td>{this.state.petugas.filter(x => x.id_petugas === item.id_petugas).map(x => x.nama_petugas)}</td>
                                     <td>{item.nisn}</td>
                                     <td>{item.tgl_bayar}</td>
                                     <td>{item.bulan_spp}</td>

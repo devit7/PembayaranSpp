@@ -340,7 +340,7 @@ getPetugas=()=>{
                                                 />
                                                 <label for="exampleInputPassword1" className="form-label">LEVEL</label>
                                                 <select className="form-select" aria-label="Default select example" value={this.state.level} onChange={ev => this.setState({level: ev.target.value})}required>
-                                                    <option selected>Open this select menu</option>
+                                                <option hidden selected>Open this select menu</option>
                                                     <option >petugas</option>
                                                     <option >admin</option>
                                                 </select>

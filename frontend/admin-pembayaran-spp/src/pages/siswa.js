@@ -308,24 +308,25 @@ saveSiswa = event => {
                                 <th>Nisn</th>
                                 <th>Nis</th>
                                 <th>Nama</th>
-                                <th>Id kelas</th>
+                                <th>kelas</th>
                                 <th>Alamat</th>
                                 <th>No Tlp</th>
-                                <th>Id Spp</th>
+                                <th>Spp</th>
                                 <th>Option</th>
                             </tr>
                         </thead>
                         <tbody>
+                        
                             {this.state.filter.map((item, index) => (
                                 <tr key={index}>
                                     <td>{index+1}</td>
                                     <td>{item.nisn}</td>
                                     <td>{item.nis}</td>
                                     <td>{item.nama}</td>
-                                    <td>{item.id_kelas}</td>
+                                    <td>{this.state.kelas.filter(x => x.id_kelas === item.id_kelas).map(x => x.nama_kelas)}</td>
                                     <td>{item.alamat}</td>
                                     <td>{item.no_tlp}</td>
-                                    <td>{item.id_spp}</td>
+                                    <td>{this.state.spp.filter(x => x.id_spp === item.id_spp).map(x => x.nominal)}</td>
                                     <td>
                                         <button className="btn btn-outline-primary"
                                         onClick={() => this.Edit(item)}>
@@ -394,6 +395,7 @@ saveSiswa = event => {
                                         />
                                         <label className="form-label">Id kelas</label>
                                             <select select class="form-select" aria-label="Default select example"  value={this.state.id_kelas} onChange={ev => this.setState({id_kelas: ev.target.value})}required>
+                                                    <option hidden selected>Open this select menu</option>
                                                     {this.state.kelas.map((item, index) => (
                                                     <option value={item.id_kelas}>{item.id_kelas} - {item.nama_kelas}</option>
                                                     ))}
@@ -412,6 +414,7 @@ saveSiswa = event => {
                                         />
                                         <label className="form-label">Id spp</label>
                                             <select select class="form-select" aria-label="Default select example"  value={this.state.id_spp} onChange={ev => this.setState({id_spp: ev.target.value})}required>
+                                                    <option hidden selected>Open this select menu</option>
                                                     {this.state.spp.map((item, index) => (
                                                     <option value={item.id_spp}>{item.id_spp} - {item.nominal}</option>
                                                     ))}

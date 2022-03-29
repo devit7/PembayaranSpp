@@ -19,6 +19,7 @@ export class ComponentToPrint extends React.Component {
             
             action:"",
             pembayaran:[],
+            petugas:[],
             orderby:"id_pembayaran",
             ordertahun:"",
             orderbulan:"",
@@ -120,6 +121,23 @@ export class ComponentToPrint extends React.Component {
             })
         }
     }
+    getPetugas=()=>{
+        let url = base_url+"/petugas"
+        axios.get(url,this.headerConfig())
+        .then(response => {
+            this.setState({petugas: response.data.data})
+        })
+        .catch(error => {
+            if (error.response) {
+                if(error.response.status) {
+                    window.alert(error.response.data.message)
+                    this.props.history.push("/login")
+                }
+            }else{
+                console.log(error);
+            }
+        })
+    }
     exportPDFWithMethod = () => {
         let element = document.querySelector(".k-grid") || document.body;
         savePDF(element, {
@@ -128,6 +146,7 @@ export class ComponentToPrint extends React.Component {
     }
     componentDidMount(){
         this.getPembayaran()
+        this.getPetugas()
     }
     
         render(){
@@ -210,7 +229,7 @@ export class ComponentToPrint extends React.Component {
                                 <tr>
                                     <th>No</th>
                                     <th>Id Pembayaran</th>
-                                    <th>Id Petugas</th>
+                                    <th>Petugas</th>
                                     <th>Nisn</th>
                                     <th>Tgl Bayar</th>
                                     <th>Bulan Bayar</th>
@@ -223,7 +242,7 @@ export class ComponentToPrint extends React.Component {
                                     <tr key={index}>
                                         <td>{index+1}</td>
                                         <td>{item.id_pembayaran}</td>
-                                        <td>{item.id_petugas}</td>
+                                        <td>{this.state.petugas.filter(x => x.id_petugas === item.id_petugas).map(x => x.nama_petugas)}</td>
                                         <td>{item.nisn}</td>
                                         <td>{item.tgl_bayar}</td>
                                         <td>{item.bulan_spp}</td>
