@@ -87,7 +87,7 @@ handelClose(){
 
     //edit
     Edit = selectionItem => {
-        let admin = JSON.parse(localStorage.getItem('admin'))
+        let admin = JSON.parse(localStorage.getItem('petugas'))
         if(admin === null){
             window.location = "/login";
         }

@@ -132,8 +132,6 @@ handelClose(){
                 console.log(error);
             }
         })
-        
-
     }
     getPetugas=()=>{
         let url = base_url+"/petugas"

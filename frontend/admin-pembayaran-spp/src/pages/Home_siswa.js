@@ -21,12 +21,12 @@ export default class Home_siswa extends React.Component{
                 sortable: true,
             },
             {
-                name: 'Bulan Bayar',
+                name: 'Bulan Spp',
                 selector: row => row.bulan_spp,
                 sortable: true,
             },
             {
-                name: 'Tahun Bayar',
+                name: 'Tahun Spp',
                 selector: row => row.tahun_spp,
                 sortable: true,
             },

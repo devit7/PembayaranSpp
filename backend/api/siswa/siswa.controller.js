@@ -171,7 +171,7 @@ module.exports={
         }else{
             res.json({
                 logged: false,
-                message: "Username or password is incorrect",
+                message: "Nisn or Nama is incorrect",
                 data: result
             })
         }   
