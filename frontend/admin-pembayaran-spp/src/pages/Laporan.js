@@ -3,13 +3,8 @@ import { useTable, useGlobalFilter, useAsyncDebounce } from 'react-table'
 import { base_url } from "../config"
 import axios from "axios"
 import Modal from "react-modal"
-import { PersonPlusFill,TrashFill,PencilFill } from 'react-bootstrap-icons';
 import Sidebar from "../components/Sidebar"
 import 'react-notifications/lib/notifications.css';
-import { jsPDF } from "jspdf";
-import { html2canvas } from "html2canvas"
- import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
-import $ from "jquery"
 import ReactToPrint from 'react-to-print';
 import { ComponentToPrint } from './ComponentToPrint';
 Modal.setAppElement('#root');
@@ -122,12 +117,7 @@ getPembayaran=()=>{
         })
     }
 }
-exportPDFWithMethod = () => {
-    let element = document.querySelector(".k-grid") || document.body;
-    savePDF(element, {
-      paperSize: "A4",
-    });
-}
+
 componentDidMount(){
     this.getPembayaran()
 }

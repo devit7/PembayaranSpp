@@ -1,13 +1,8 @@
 import React from "react";
 import 'react-notifications/lib/notifications.css';
-import { jsPDF } from "jspdf";
-import { html2canvas } from "html2canvas"
 import { base_url } from "../config"
 import axios from "axios"
 import Modal from "react-modal"
- import { PDFExport, savePDF } from '@progress/kendo-react-pdf';
-import $ from "jquery"
-import ReactToPrint from 'react-to-print';
 Modal.setAppElement('#root');
 // Using a class component, everything works without issue
 // but we need to use the "static" keyword to tell React
@@ -137,12 +132,6 @@ export class ComponentToPrint extends React.Component {
                 console.log(error);
             }
         })
-    }
-    exportPDFWithMethod = () => {
-        let element = document.querySelector(".k-grid") || document.body;
-        savePDF(element, {
-          paperSize: "A4",
-        });
     }
     componentDidMount(){
         this.getPembayaran()
