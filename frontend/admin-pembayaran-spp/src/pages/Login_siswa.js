@@ -50,8 +50,8 @@ class Login_siswa extends React.Component{
                
             <div className="card-body">
                 <form onSubmit={ev => this.Login(ev)}>
-                    <h1 className="h3 mb-3 fw-normal">Student sign in</h1>
-                
+                    <h1 className="h3 mb-3 fw-normal text-center">Student sign in</h1>
+                    <hr/>
                     <div className="">
                     <label >Nisn</label>
                     <input type="password" className="form-control " id="floatingInput" placeholder="nisn" value={this.state.nisn} onChange={ev => this.setState({nisn: ev.target.value})}/>

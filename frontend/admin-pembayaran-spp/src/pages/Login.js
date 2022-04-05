@@ -1,7 +1,6 @@
 import React from "react"
 import axios from "axios"
 import { base_url } from "../config.js";
-
 class Login extends React.Component{
     constructor(){
         super()
@@ -59,12 +58,12 @@ class Login extends React.Component{
             // container flex responsive ditengah dan rata
 
            <div className="container d-flex h-100 justify-content-center align-items-center">
-               <div className="col-sm-3 card my-5">
+               <div className="col-sm-4 card my-5">
                
-            <div className="card-body">
+             <div className="card-body">
                 <form onSubmit={ev => this.Login(ev)}>
-                    <h1 className="h3 mb-3 fw-normal">Admin sign in</h1>
-                
+                    <h1 className="h3 mb-3 fw-normal text-center">Login Page</h1>
+                    <hr/>
                     <div className="">
                     <label >Username</label>
                     <input type="text" className="form-control " id="floatingInput" placeholder="Username" value={this.state.username} onChange={ev => this.setState({username: ev.target.value})}/>
@@ -83,7 +82,7 @@ class Login extends React.Component{
                     </select>
                     
                     <br/>
-                    <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+                    <button className="w-100 btn btn-primary" type="submit">Sign in</button>
                     { !this.state.logged ?(
                     <div className="alert alert-danger mt-1">{this.state.message}</div>
                     ): null}
@@ -92,9 +91,10 @@ class Login extends React.Component{
                 </form>
                 
             </div>
-            </div>
+            
+
         </div>
-        
+        </div>
         )
     }
 }

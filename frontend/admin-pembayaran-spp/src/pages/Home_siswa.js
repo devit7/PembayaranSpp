@@ -140,7 +140,7 @@ export default class Home_siswa extends React.Component{
                     <td>{this.state.admin.nama}</td>
                     <td>{this.state.kelas.nama_kelas}</td>
                     <td>{this.state.kelas.angkatan}</td>
-                    <td>{this.state.spp.nominal}</td>
+                    <td>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(this.state.spp.nominal)}</td>
                     </tr>
                 </tbody>
                 </table>

@@ -326,7 +326,7 @@ saveSiswa = event => {
                                     <td>{this.state.kelas.filter(x => x.id_kelas === item.id_kelas).map(x => x.nama_kelas)}</td>
                                     <td>{item.alamat}</td>
                                     <td>{item.no_tlp}</td>
-                                    <td>{this.state.spp.filter(x => x.id_spp === item.id_spp).map(x => x.nominal)}</td>
+                                    <td>{this.state.spp.filter(x => x.id_spp === item.id_spp).map(x => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(x.nominal))}</td>
                                     <td>
                                         <button className="btn btn-outline-primary"
                                         onClick={() => this.Edit(item)}>

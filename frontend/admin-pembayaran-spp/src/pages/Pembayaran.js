@@ -93,11 +93,10 @@ handelClose(){
         }
         let adminName= admin.id_petugas
         let today = new Date();
-        let dd = String(today.getDate()).padStart(2, '0');
         const data={
             id_pembayaran: selectionItem.id_pembayaran,
             id_petugas:adminName,
-            tgl_bayar: dd,
+            tgl_bayar: today,
             status:"Sudah Bayar"
         }
         let url = base_url + "/pembayaran"
@@ -247,7 +246,7 @@ handelClose(){
                 <h5 class="card-header ">Pages Pembayaran</h5>
                 <div class="card-body">
                     <button className="btn btn-outline-success" onClick={() => this.Add()}>
-                    <PersonPlusFill/> add
+                    <PersonPlusFill/> Generate
                     </button>
                     {/* <form className="float-end"> 
                     <input className="" id="myInput" type="text" placeholder="Search.." value={this.state.keyword} onChange={ev => this.setState({keyword: ev.target.value})} onKeyUp={this.getPembayaran} />

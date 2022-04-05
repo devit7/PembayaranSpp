@@ -29,15 +29,17 @@ export default class Home_petugas extends React.Component{
         const d = new Date();
         let year = d.getFullYear();
         let month = d.getMonth();
+        let thismonth = month+1;
         this.setState({tahun: year})
-        this.setState({bulan: month})
-    let url = base_url+"/pembayaran/tahun_spp/"+year+"/"+month+"/Sudah Bayar"
+        this.setState({bulan: thismonth})
+        
+    let url = base_url+"/pembayaran/tahun_spp/"+year+"/"+thismonth+"/Sudah Bayar"
     axios.get(url , this.headerConfig())
     .then(response => {
         this.setState({sudahbayar: response.data.data.length})
         console.log(this.state.sudahbayar)
     })
-    let url1 = base_url+"/pembayaran/tahun_spp/"+year+"/"+month+"/Belum Bayar"
+    let url1 = base_url+"/pembayaran/tahun_spp/"+year+"/"+thismonth+"/Belum Bayar"
     axios.get(url1 , this.headerConfig())
     .then(response => {
         this.setState({belumbayar: response.data.data.length})
@@ -87,7 +89,7 @@ componentDidMount(){
                                         </div>
                                     </div>
                                     <p class="mt-3 mb-0 text-muted text-sm">
-                                        <span className="text-nowrap">Since last year</span>
+                                        <span className="text-nowrap">This year</span>
                                     </p>
                                     </div>
                                 </div>
@@ -107,7 +109,7 @@ componentDidMount(){
                                         </div>
                                     </div>
                                     <p className="mt-3 mb-0 text-muted text-sm">
-                                        <span className="text-nowrap">Since last month</span>
+                                        <span className="text-nowrap">This month</span>
                                     </p>
                                     </div>
                                 </div>
@@ -169,7 +171,9 @@ componentDidMount(){
                     </footer>
                 </div>
             </div>
+        
         )
+
     }
 }
 

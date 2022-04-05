@@ -2,7 +2,6 @@ import React from "react"
 import axios from "axios"
 import { base_url } from "../config.js"
 import Sidebar from '../components/Sidebar';
-import '../css/home.css'
 export default class Home extends React.Component{
     constructor(){
         super()
@@ -101,7 +100,7 @@ export default class Home extends React.Component{
     render(){
         return(
             <div>
-                <Sidebar/>
+                 <Sidebar/>
 
                 <br/>
 
@@ -206,9 +205,12 @@ export default class Home extends React.Component{
                             </div>
                         </div>
                         </div>
-                    </footer>
-                </div>
-            </div>
+                    </footer> 
+
+    </div> 
+
+    </div>
+            
         )
     }
 }

@@ -262,7 +262,7 @@ saveSpp = event => {
                                     <td>{item.id_spp}</td>
                                     <td>{item.angkatan}</td>
                                     <td>{item.tahun}</td>
-                                    <td>{item.nominal}</td>
+                                    <td>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.nominal)}</td>
                                     <td>
                                         <button className="btn btn-outline-primary"
                                         onClick={() => this.Edit(item)}>
