@@ -1,6 +1,6 @@
 # Web Pembayaran SPP
 
-![Web Pembayaran SPP](https://lh3.googleusercontent.com/drive-viewer/AITFw-wvqKQny2pNsBNRRWW6qIPFdvszBk3UFeFcsEVD0db9yiEyJ2Evh7YCoAe9jIIimeAn_0-qu5nZA5d8W5ShzKBHCHpA=s1600)
+![Web Pembayaran SPP](https://iili.io/J27uosn.png)
 
 Ini adalah aplikasi web untuk pembayaran SPP (Sumbangan Pembinaan Pendidikan) yang memiliki berbagai fitur penting untuk manajemen pembayaran. Aplikasi ini dibangun dengan menggunakan teknologi sebagai berikut:
 
